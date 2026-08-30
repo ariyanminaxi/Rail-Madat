@@ -1,0 +1,70 @@
+name: RailMadat CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run backend tests
+        env:
+          DATA_MODE: csv
+          CSV_DATA_PATH: ../csv_data
+        run: pytest tests/ -v --tb=short
+
+  ml-tests:
+    name: ML Model Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ml
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install scikit-learn pandas numpy joblib pytest
+
+      - name: Run ML tests
+        run: python -m pytest maintenance_intelligence/tests/ -v --tb=short
+
+  frontend-lint:
+    name: Frontend Check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: railmadat-frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check HTML validity
+        run: |
+          for f in *.html; do
+            echo "Checking $f..."
+            grep -q "<!DOCTYPE html>" "$f" || echo "⚠️  $f missing DOCTYPE"
+          done

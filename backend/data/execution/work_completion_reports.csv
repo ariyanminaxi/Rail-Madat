@@ -1,0 +1,5 @@
+report_id,task_id,work_status,completion_percentage,remaining_work_minutes,failure_reason,received_at
+R-001,T-001,Completed,100,0,,2026-05-01T14:00:00+05:30
+R-002,T-002,Interrupted,40,36,Train conflict,2026-06-10T09:30:00+05:30
+R-003,T-003,Completed,100,0,,2026-04-15T16:00:00+05:30
+R-004,T-004,Not Completed,10,54,Parts unavailable,2026-07-01T11:00:00+05:30

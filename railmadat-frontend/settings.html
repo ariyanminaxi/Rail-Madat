@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Settings</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">SETTINGS</p>
+                    <h1>Settings</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Manage your profile and preferences</p>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="panel" style="max-width:800px">
+                    <div class="panel-header">
+                        <div><h3>Profile Information</h3><p>Your account details</p></div>
+                    </div>
+                    <div style="padding:24px" id="profile-info">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Change Password -->
+                <div class="panel" style="max-width:800px">
+                    <div class="panel-header">
+                        <div><h3>Change Password</h3><p>Update your account password</p></div>
+                    </div>
+                    <div style="padding:24px">
+                        <form id="password-form" style="display:flex;flex-direction:column;gap:16px;max-width:400px">
+                            <div class="field">
+                                <label for="current-pw">Current Password</label>
+                                <input id="current-pw" type="password" placeholder="Enter current password" required>
+                            </div>
+                            <div class="field">
+                                <label for="new-pw">New Password</label>
+                                <input id="new-pw" type="password" placeholder="Enter new password (min 6 chars)" required minlength="6">
+                            </div>
+                            <div class="field">
+                                <label for="confirm-pw">Confirm New Password</label>
+                                <input id="confirm-pw" type="password" placeholder="Re-enter new password" required>
+                            </div>
+                            <div id="pw-msg" style="display:none"></div>
+                            <button type="submit" class="btn-primary" style="align-self:flex-start">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Notification Preferences -->
+                <div class="panel" style="max-width:800px">
+                    <div class="panel-header">
+                        <div><h3>Notification Preferences</h3><p>Control how you receive alerts</p></div>
+                    </div>
+                    <div style="padding:24px">
+                        <label style="display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;color:var(--text-primary);font-size:13px">
+                            <input type="checkbox" checked disabled style="width:auto"> Dashboard alerts (always enabled)
+                        </label>
+                        <label style="display:flex;align-items:center;gap:10px;cursor:pointer;color:var(--text-primary);font-size:13px">
+                            <input type="checkbox" id="email-notif" style="width:auto"> Email notifications
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Account Actions -->
+                <div class="panel" style="max-width:800px">
+                    <div class="panel-header">
+                        <div><h3>Account Actions</h3></div>
+                    </div>
+                    <div style="padding:24px;display:flex;gap:12px">
+                        <button class="btn-danger" onclick="AUTH.logout()">Sign Out</button>
+                    </div>
+                </div>
+
+                <div class="footer-disclaimer">RailMadat is a decision-support prototype. All AI recommendations require human approval.</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        // Load profile
+        async function loadProfile() {
+            var el = document.getElementById('profile-info');
+            try {
+                var me = await apiRequest('/auth/me');
+                if (me) {
+                    var roleLabel = (me.role || '').replace(/_/g,' ').replace(/\b\w/g, function(l){ return l.toUpperCase(); });
+                    el.innerHTML =
+                        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">' +
+                        '<div class="field"><label>Full Name</label><input value="' + (me.full_name||'') + '" readonly style="background:var(--bg-hover);cursor:not-allowed"></div>' +
+                        '<div class="field"><label>Email</label><input value="' + (me.email||'') + '" readonly style="background:var(--bg-hover);cursor:not-allowed"></div>' +
+                        '<div class="field"><label>Role</label><input value="' + roleLabel + '" readonly style="background:var(--bg-hover);cursor:not-allowed"></div>' +
+                        '<div class="field"><label>Department</label><input value="' + (me.department||'') + '" readonly style="background:var(--bg-hover);cursor:not-allowed"></div>' +
+                        '<div class="field"><label>Section</label><input value="' + (me.section_id||'') + '" readonly style="background:var(--bg-hover);cursor:not-allowed"></div>' +
+                        '</div>';
+                }
+            } catch(e) {
+                el.innerHTML = '<p style="color:var(--text-tertiary)">Failed to load profile</p>';
+            }
+        }
+        loadProfile();
+
+        // Password change (placeholder — needs backend endpoint)
+        document.getElementById('password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var msg = document.getElementById('pw-msg');
+            var npw = document.getElementById('new-pw').value;
+            var cpw = document.getElementById('confirm-pw').value;
+            if (npw !== cpw) {
+                msg.style.display = 'block';
+                msg.className = 'form-error';
+                msg.textContent = 'New passwords do not match.';
+                return;
+            }
+            msg.style.display = 'block';
+            msg.className = 'form-success';
+            msg.textContent = 'Password update feature will be available in the next release.';
+        });
+    })();
+    </script>
+</body>
+</html>

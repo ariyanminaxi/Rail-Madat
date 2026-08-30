@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Team Management</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">TEAMS</p>
+                    <h1>Team Management</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Manage maintenance teams and track availability</p>
+                </div>
+
+                <div class="safety-notice" style="max-width:900px">
+                    <div class="safety-notice-icon">ℹ</div>
+                    <div>
+                        <strong>MVP — View Only</strong>
+                        <p>Team assignment and member management will be available in a future release.</p>
+                    </div>
+                </div>
+
+                <div class="panel" style="max-width:900px;margin-top:20px">
+                    <table class="data-table">
+                        <thead><tr><th>Team ID</th><th>Department</th><th>Section</th><th>Qualification</th><th>Status</th><th>Reserve</th></tr></thead>
+                        <tbody id="teams-tbody"><tr><td colspan="6" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+        async function load() {
+            try {
+                var data = await apiRequest('/teams');
+                var tbody = document.getElementById('teams-tbody');
+                if (data && data.length > 0) {
+                    tbody.innerHTML = data.map(function(t) {
+                        var sClass = 'badge-green';
+                        if (t.resource_status === 'Reserved' || t.is_reserve_team) sClass = 'badge-purple';
+                        else if (t.resource_status === 'On_Task') sClass = 'badge-blue';
+                        else if (t.resource_status === 'Unavailable') sClass = 'badge-red';
+                        return '<tr>' +
+                            '<td><strong style="color:var(--text-primary)">' + (t.team_id || '') + '</strong></td>' +
+                            '<td>' + (t.department || '') + '</td>' +
+                            '<td>' + (t.home_section_id || '') + '</td>' +
+                            '<td>' + (t.qualification || '') + '</td>' +
+                            '<td><span class="badge ' + sClass + '">' + (t.resource_status || t.status || '') + '</span></td>' +
+                            '<td>' + (t.is_reserve_team ? '<span class="badge badge-purple">Reserve</span>' : '—') + '</td>' +
+                            '</tr>';
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-tertiary);padding:40px">No teams found</td></tr>';
+                }
+            } catch(e) {
+                document.getElementById('teams-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:40px">Failed to load teams</td></tr>';
+            }
+        }
+        load();
+    })();
+    </script>
+</body>
+</html>

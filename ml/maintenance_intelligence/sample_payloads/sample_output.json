@@ -1,0 +1,17 @@
+{
+  "department": "Signalling",
+  "fault_category": "Signal malfunction",
+  "severity": "High",
+  "base_priority": "High",
+  "final_priority": "Critical",
+  "recommended_action": "Immediate inspection required",
+  "confidence": 0.91,
+  "human_review_required": true,
+  "explanation": [
+    "Asset is safety-critical and status is Interrupted",
+    "Asset is safety-critical",
+    "Work is currently interrupted",
+    "Service impact is major",
+    "Fault has occurred 2 time(s) in the previous 30 days"
+  ]
+}

@@ -1,0 +1,5 @@
+task_id,asset_id,section_id,work_status,completed_at,fault_category,department
+T-001,SIG-S02-04,S-02,Completed,2026-05-01T14:00:00+05:30,Signal malfunction,Signalling
+T-002,TRK-S01-02,S-01,Interrupted,2026-06-10T09:30:00+05:30,Track damage,Track
+T-003,ELE-S03-01,S-03,Completed,2026-04-15T16:00:00+05:30,Electrical fault,Electrical
+T-004,PM-S02-01,S-02,Not Completed,2026-07-01T11:00:00+05:30,Point machine failure,Signalling

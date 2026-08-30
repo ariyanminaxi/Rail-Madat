@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Dashboard</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom: 24px;">
+                    <p class="eyebrow">DASHBOARD</p>
+                    <h1 id="welcome-msg">Welcome, Officer</h1>
+                    <p style="color:var(--text-tertiary); font-style:italic; margin-top:6px" id="role-info"></p>
+                </div>
+
+                <div class="stats-grid" id="stats-grid">
+                    <div class="loading-spinner"></div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:20px; margin-bottom:20px">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div><h3>Recent Complaints</h3><p>Latest fault reports</p></div>
+                            <a href="complaints.html" class="text-button">View All</a>
+                        </div>
+                        <div id="complaints-list" style="padding:5px 21px"><div class="loading-spinner"></div></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header">
+                            <div><h3>AI Classification</h3><p>Automated fault analysis</p></div>
+                        </div>
+                        <div style="padding:20px" id="ai-panel">
+                            <div class="badge badge-green" style="margin-bottom:12px">● ML Model Active</div>
+                            <div id="ai-stats"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div><h3>Maintenance Tasks</h3><p>Active and pending work</p></div>
+                    </div>
+                    <table class="data-table">
+                        <thead><tr><th>Task ID</th><th>Asset</th><th>Department</th><th>Priority</th><th>Status</th></tr></thead>
+                        <tbody id="tasks-tbody"><tr><td colspan="5" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="safety-notice">
+                    <div class="safety-notice-icon">⚠</div>
+                    <div>
+                        <strong>Safety Disclaimer</strong>
+                        <p>RailMadad is a decision-support prototype using synthetic data. It does not control live railway infrastructure. All AI recommendations require human approval before implementation.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        var role = AUTH.getRole();
+        var userName = AUTH.getUserName();
+        var roleLabel = role ? role.replace(/_/g,' ').replace(/\b\w/g,function(l){return l.toUpperCase();}) : '';
+        document.getElementById('welcome-msg').textContent = 'Welcome, ' + (userName || 'Officer');
+        document.getElementById('role-info').textContent = roleLabel;
+
+        async function loadDashboard() {
+            // Stats
+            try {
+                var stats = await apiRequest('/dashboard/stats');
+                if (stats) {
+                    var grid = document.getElementById('stats-grid');
+                    grid.innerHTML =
+                        '<div class="stat-card"><div class="stat-icon blue">📋</div><div><span>Total Complaints</span><strong>'+(stats.total_complaints||0)+'</strong><small>All time</small></div></div>'+
+                        '<div class="stat-card"><div class="stat-icon orange">⏳</div><div><span>Open Complaints</span><strong>'+(stats.open_complaints||0)+'</strong><small>Needs attention</small></div></div>'+
+                        '<div class="stat-card"><div class="stat-icon red">🔧</div><div><span>Total Tasks</span><strong>'+(stats.total_tasks||0)+'</strong><small>Maintenance work</small></div></div>'+
+                        '<div class="stat-card"><div class="stat-icon green">✅</div><div><span>Completed</span><strong>'+(stats.completed||0)+'</strong><small>Done</small></div></div>';
+                }
+            } catch(e) { document.getElementById('stats-grid').innerHTML='<div class="form-error">Failed to load stats</div>'; }
+
+            // Complaints
+            try {
+                var complaints = await apiRequest('/complaints');
+                var el = document.getElementById('complaints-list');
+                if (complaints && complaints.length > 0) {
+                    var html = '';
+                    complaints.slice(0,5).forEach(function(c) {
+                        var pClass = 'badge-medium';
+                        html += '<div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border-light)">';
+                        html += '<span class="status-dot '+(c.priority==='Critical'?'critical':c.priority==='High'?'high':'medium')+'"></span>';
+                        html += '<div style="flex:1;min-width:0"><strong style="color:var(--text-primary);font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(c.complaint_id||'')+' — '+(c.description||'').slice(0,50)+'</strong>';
+                        html += '<span style="color:var(--text-tertiary);font-size:10px;display:block;margin-top:4px">'+(c.section_id||'')+' · '+(c.asset_type||'')+'</span></div>';
+                        html += '<span class="badge '+(c.status==='Reported'?'badge-high':'badge-green')+'" style="font-size:9px">'+(c.status||'')+'</span></div>';
+                    });
+                    el.innerHTML = html;
+                } else {
+                    el.innerHTML = '<p style="color:var(--text-tertiary);font-size:11px;padding:20px 0">No complaints yet.</p>';
+                }
+            } catch(e) { document.getElementById('complaints-list').innerHTML='<p style="color:var(--text-tertiary);font-size:11px">Failed to load complaints</p>'; }
+
+            // Tasks
+            try {
+                var tasks = await apiRequest('/tasks');
+                var tbody = document.getElementById('tasks-tbody');
+                if (tasks && tasks.length > 0) {
+                    var html = '';
+                    tasks.slice(0,8).forEach(function(t) {
+                        var sClass = 'badge-blue';
+                        if (t.status==='Completed') sClass='badge-green';
+                        if (t.status==='Emergency'||t.status==='Deferred') sClass='badge-red';
+                        var pClass = 'badge-medium';
+                        if (t.priority==='Critical') pClass='badge-critical';
+                        if (t.priority==='High') pClass='badge-high';
+                        html += '<tr>';
+                        html += '<td><strong style="color:var(--text-primary)">'+(t.task_id||'')+'</strong></td>';
+                        html += '<td>'+(t.asset_id||'')+'</td>';
+                        html += '<td>'+(t.department||'')+'</td>';
+                        html += '<td><span class="badge '+pClass+'">'+(t.priority||'')+'</span></td>';
+                        html += '<td><span class="badge '+sClass+'">'+(t.status||'').replace(/_/g,' ')+'</span></td>';
+                        html += '</tr>';
+                    });
+                    tbody.innerHTML = html;
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-tertiary);padding:24px">No tasks yet.</td></tr>';
+                }
+            } catch(e) { document.getElementById('tasks-tbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-tertiary)">Failed to load tasks</td></tr>'; }
+
+            // Alerts
+            try {
+                var alerts = await apiRequest('/dashboard/alerts');
+                if (alerts && alerts.length > 0) {
+                    var countEl = document.getElementById('notif-count');
+                    if (countEl) { countEl.textContent = alerts.length; countEl.style.display = 'grid'; }
+                    var aiStats = document.getElementById('ai-stats');
+                    aiStats.innerHTML = '<p style="color:var(--text-tertiary);font-size:12px;margin-bottom:12px">'+alerts.length+' active alerts</p>';
+                    alerts.slice(0,3).forEach(function(a) {
+                        aiStats.innerHTML += '<div style="padding:8px 0;border-bottom:1px solid var(--border-light);font-size:12px;color:var(--text-secondary)">'+(a.title||a.message||'')+'</div>';
+                    });
+                }
+            } catch(e) {}
+        }
+
+        loadDashboard();
+    })();
+    </script>
+</body>
+</html>

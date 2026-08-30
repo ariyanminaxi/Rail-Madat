@@ -1,0 +1,111 @@
+event_id,task_id,case_id,event_type,old_status,new_status,event_reason,reported_by,created_at,remaining_work_minutes,final_priority
+EVT-701,T-201,C-201,STATUS_CHANGE,Reported,Emergency,Emergency condition detected,TEAM-TRK-01,2026-08-02T18:30:00+05:30,0,Low
+EVT-702,T-202,C-202,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-ELE-01,2026-08-14T06:30:00+05:30,60,Low
+EVT-703,T-202,C-202,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-08-14T17:30:00+05:30,60,Low
+EVT-704,T-202,C-202,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-SIG-01,2026-08-14T09:15:00+05:30,45,Low
+EVT-705,T-202,C-202,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,maint_manager_01,2026-08-14T16:15:00+05:30,0,Low
+EVT-706,T-202,C-202,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-ELE-01,2026-08-14T15:45:00+05:30,0,Low
+EVT-707,T-202,C-202,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,role1_system,2026-08-14T07:30:00+05:30,0,Low
+EVT-708,T-203,C-203,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,role1_system,2026-07-04T09:15:00+05:30,60,Medium
+EVT-709,T-203,C-203,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-07-04T20:30:00+05:30,60,Medium
+EVT-710,T-203,C-203,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,maint_manager_01,2026-07-04T10:45:00+05:30,0,Medium
+EVT-711,T-203,C-203,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-ELE-01,2026-07-05T19:30:00+05:30,0,Medium
+EVT-712,T-203,C-203,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-06T12:45:00+05:30,45,Medium
+EVT-713,T-203,C-203,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-SIG-01,2026-07-06T09:30:00+05:30,0,Medium
+EVT-714,T-204,C-204,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-SIG-01,2026-07-14T07:45:00+05:30,30,Critical
+EVT-715,T-204,C-204,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,role1_system,2026-07-14T20:00:00+05:30,15,Critical
+EVT-716,T-204,C-204,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,maint_manager_01,2026-07-14T06:00:00+05:30,30,Critical
+EVT-717,T-204,C-204,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-TRK-01,2026-07-14T12:00:00+05:30,60,Critical
+EVT-718,T-204,C-204,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,maint_manager_01,2026-07-14T12:15:00+05:30,30,Critical
+EVT-719,T-204,C-204,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-TRK-01,2026-07-15T06:30:00+05:30,0,Critical
+EVT-720,T-205,C-205,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-TRK-01,2026-08-12T10:30:00+05:30,15,Medium
+EVT-721,T-205,C-205,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,role1_system,2026-08-12T10:00:00+05:30,30,Medium
+EVT-722,T-205,C-205,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-TRK-01,2026-08-13T16:00:00+05:30,15,Medium
+EVT-723,T-205,C-205,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,role1_system,2026-08-13T10:45:00+05:30,60,Medium
+EVT-724,T-205,C-205,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,role1_system,2026-08-13T21:45:00+05:30,30,Medium
+EVT-725,T-205,C-205,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,maint_manager_01,2026-08-13T09:45:00+05:30,0,Medium
+EVT-726,T-206,C-206,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-TRK-01,2026-07-09T07:30:00+05:30,45,Critical
+EVT-727,T-206,C-206,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,role1_system,2026-07-09T07:45:00+05:30,45,Critical
+EVT-728,T-206,C-206,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,role1_system,2026-07-09T21:45:00+05:30,0,Critical
+EVT-729,T-206,C-206,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,role1_system,2026-07-10T16:15:00+05:30,0,Critical
+EVT-730,T-206,C-206,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-10T16:45:00+05:30,60,Critical
+EVT-731,T-206,C-206,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-SIG-01,2026-07-10T20:45:00+05:30,0,Critical
+EVT-732,T-207,C-207,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,role1_system,2026-07-26T12:45:00+05:30,45,Low
+EVT-733,T-207,C-207,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-TRK-01,2026-07-27T19:30:00+05:30,45,Low
+EVT-734,T-207,C-207,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-ELE-01,2026-07-27T09:30:00+05:30,45,Low
+EVT-735,T-207,C-207,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-SIG-01,2026-07-27T17:15:00+05:30,45,Low
+EVT-736,T-207,C-207,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,role1_system,2026-07-27T08:00:00+05:30,45,Low
+EVT-737,T-207,C-207,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-SIG-01,2026-07-27T10:00:00+05:30,0,Low
+EVT-738,T-208,C-208,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,maint_manager_01,2026-07-15T16:00:00+05:30,45,High
+EVT-739,T-208,C-208,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-07-15T07:30:00+05:30,60,High
+EVT-740,T-208,C-208,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-SIG-01,2026-07-15T09:15:00+05:30,15,High
+EVT-741,T-208,C-208,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-ELE-01,2026-07-15T13:00:00+05:30,30,High
+EVT-742,T-208,C-208,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,maint_manager_01,2026-07-16T17:00:00+05:30,30,High
+EVT-743,T-208,C-208,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-TRK-01,2026-07-16T19:00:00+05:30,0,High
+EVT-744,T-209,C-209,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-SIG-01,2026-07-25T06:15:00+05:30,30,Low
+EVT-745,T-209,C-209,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-SIG-01,2026-07-26T16:30:00+05:30,0,Low
+EVT-746,T-209,C-209,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-TRK-01,2026-07-26T18:00:00+05:30,15,Low
+EVT-747,T-209,C-209,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,role1_system,2026-07-27T08:15:00+05:30,45,Low
+EVT-748,T-209,C-209,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-ELE-01,2026-07-27T16:15:00+05:30,30,Low
+EVT-749,T-209,C-209,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-SIG-01,2026-07-27T08:00:00+05:30,0,Low
+EVT-750,T-210,C-210,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-TRK-01,2026-07-05T07:00:00+05:30,30,High
+EVT-751,T-210,C-210,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-07-05T21:45:00+05:30,45,High
+EVT-752,T-210,C-210,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-TRK-01,2026-07-05T22:00:00+05:30,30,High
+EVT-753,T-210,C-210,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,role1_system,2026-07-05T15:45:00+05:30,60,High
+EVT-754,T-210,C-210,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-05T07:15:00+05:30,45,High
+EVT-755,T-210,C-210,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,role1_system,2026-07-05T06:15:00+05:30,0,High
+EVT-756,T-211,C-211,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-TRK-01,2026-08-11T10:30:00+05:30,30,Critical
+EVT-757,T-211,C-211,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,role1_system,2026-08-11T06:45:00+05:30,45,Critical
+EVT-758,T-211,C-211,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-TRK-01,2026-08-11T18:15:00+05:30,60,Critical
+EVT-759,T-211,C-211,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-SIG-01,2026-08-11T08:45:00+05:30,0,Critical
+EVT-760,T-211,C-211,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,role1_system,2026-08-11T20:00:00+05:30,30,Critical
+EVT-761,T-211,C-211,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-ELE-01,2026-08-11T18:45:00+05:30,0,Critical
+EVT-762,T-212,C-212,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,role1_system,2026-07-11T18:00:00+05:30,30,Low
+EVT-763,T-212,C-212,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,maint_manager_01,2026-07-11T20:30:00+05:30,0,Low
+EVT-764,T-212,C-212,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,role1_system,2026-07-11T13:45:00+05:30,60,Low
+EVT-765,T-212,C-212,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,maint_manager_01,2026-07-11T08:45:00+05:30,30,Low
+EVT-766,T-212,C-212,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-12T13:30:00+05:30,15,Low
+EVT-767,T-212,C-212,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,maint_manager_01,2026-07-12T09:15:00+05:30,0,Low
+EVT-768,T-213,C-213,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-SIG-01,2026-08-21T17:15:00+05:30,15,Medium
+EVT-769,T-213,C-213,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-TRK-01,2026-08-21T14:15:00+05:30,15,Medium
+EVT-770,T-213,C-213,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-TRK-01,2026-08-21T08:15:00+05:30,45,Medium
+EVT-771,T-213,C-213,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,maint_manager_01,2026-08-21T20:30:00+05:30,30,Medium
+EVT-772,T-213,C-213,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-ELE-01,2026-08-21T08:45:00+05:30,45,Medium
+EVT-773,T-213,C-213,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-SIG-01,2026-08-21T14:00:00+05:30,0,Medium
+EVT-774,T-214,C-214,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,maint_manager_01,2026-07-11T08:30:00+05:30,45,Critical
+EVT-775,T-214,C-214,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,role1_system,2026-07-11T07:30:00+05:30,30,Critical
+EVT-776,T-214,C-214,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,role1_system,2026-07-11T22:45:00+05:30,45,Critical
+EVT-777,T-214,C-214,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,maint_manager_01,2026-07-11T07:45:00+05:30,60,Critical
+EVT-778,T-214,C-214,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-TRK-01,2026-07-11T16:45:00+05:30,60,Critical
+EVT-779,T-214,C-214,STATUS_CHANGE,In Progress,Deferred,Required block not granted,role1_system,2026-07-11T20:00:00+05:30,30,Critical
+EVT-780,T-215,C-215,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,role1_system,2026-07-06T22:15:00+05:30,0,Low
+EVT-781,T-215,C-215,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-07-06T20:15:00+05:30,30,Low
+EVT-782,T-215,C-215,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-SIG-01,2026-07-06T18:45:00+05:30,30,Low
+EVT-783,T-215,C-215,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,maint_manager_01,2026-07-06T07:30:00+05:30,0,Low
+EVT-784,T-215,C-215,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,role1_system,2026-07-06T18:30:00+05:30,30,Low
+EVT-785,T-215,C-215,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,maint_manager_01,2026-07-07T10:30:00+05:30,0,Low
+EVT-786,T-216,C-216,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,maint_manager_01,2026-07-08T10:30:00+05:30,30,Low
+EVT-787,T-216,C-216,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-07-08T10:00:00+05:30,30,Low
+EVT-788,T-216,C-216,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-ELE-01,2026-07-08T16:15:00+05:30,60,Low
+EVT-789,T-216,C-216,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-ELE-01,2026-07-08T22:30:00+05:30,0,Low
+EVT-790,T-216,C-216,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-08T11:15:00+05:30,30,Low
+EVT-791,T-216,C-216,STATUS_CHANGE,In Progress,Deferred,Required block not granted,TEAM-ELE-01,2026-07-09T12:15:00+05:30,15,Low
+EVT-792,T-217,C-217,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,role1_system,2026-06-30T15:00:00+05:30,60,Medium
+EVT-793,T-217,C-217,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,maint_manager_01,2026-07-01T22:00:00+05:30,30,Medium
+EVT-794,T-217,C-217,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,maint_manager_01,2026-07-02T10:45:00+05:30,15,Medium
+EVT-795,T-217,C-217,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-TRK-01,2026-07-02T11:45:00+05:30,0,Medium
+EVT-796,T-217,C-217,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-SIG-01,2026-07-02T13:45:00+05:30,60,Medium
+EVT-797,T-217,C-217,STATUS_CHANGE,In Progress,Completed,Routine workflow progression,TEAM-ELE-01,2026-07-02T13:15:00+05:30,0,Medium
+EVT-798,T-218,C-218,STATUS_CHANGE,Reported,Emergency,Emergency condition detected,TEAM-ELE-01,2026-07-24T12:30:00+05:30,60,Medium
+EVT-799,T-219,C-219,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-ELE-01,2026-08-01T15:45:00+05:30,60,Critical
+EVT-800,T-219,C-219,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,TEAM-ELE-01,2026-08-01T11:15:00+05:30,60,Critical
+EVT-801,T-219,C-219,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-SIG-01,2026-08-01T07:45:00+05:30,30,Critical
+EVT-802,T-219,C-219,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,role1_system,2026-08-01T22:00:00+05:30,30,Critical
+EVT-803,T-219,C-219,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-TRK-01,2026-08-01T14:45:00+05:30,60,Critical
+EVT-804,T-219,C-219,STATUS_CHANGE,In Progress,Deferred,Required block not granted,TEAM-ELE-01,2026-08-01T08:15:00+05:30,45,Critical
+EVT-805,T-220,C-220,STATUS_CHANGE,Reported,Under Review,Routine workflow progression,TEAM-SIG-01,2026-07-17T06:45:00+05:30,0,Critical
+EVT-806,T-220,C-220,STATUS_CHANGE,Under Review,Assigned,Routine workflow progression,maint_manager_01,2026-07-17T17:15:00+05:30,45,Critical
+EVT-807,T-220,C-220,STATUS_CHANGE,Assigned,Waiting for Block,Routine workflow progression,TEAM-SIG-01,2026-07-17T13:00:00+05:30,30,Critical
+EVT-808,T-220,C-220,STATUS_CHANGE,Waiting for Block,Scheduled,Routine workflow progression,TEAM-SIG-01,2026-07-17T10:15:00+05:30,0,Critical
+EVT-809,T-220,C-220,STATUS_CHANGE,Scheduled,In Progress,Routine workflow progression,TEAM-ELE-01,2026-07-17T10:45:00+05:30,45,Critical
+EVT-810,T-220,C-220,STATUS_CHANGE,In Progress,Deferred,Required block not granted,role1_system,2026-07-17T08:00:00+05:30,30,Critical

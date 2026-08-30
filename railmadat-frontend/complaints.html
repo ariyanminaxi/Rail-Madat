@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Complaints</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:20px">
+                    <p class="eyebrow">COMPLAINTS</p>
+                    <h1 id="page-title">All Complaints</h1>
+                </div>
+
+                <div class="filters-row">
+                    <div class="field">
+                        <label for="filter-status">Status</label>
+                        <select id="filter-status"><option value="">All</option><option>Reported</option><option>Under Review</option><option>Completed</option><option>Deferred</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="filter-priority">Priority</label>
+                        <select id="filter-priority"><option value="">All</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+                    </div>
+                    <div class="field" style="flex:2">
+                        <label for="filter-search">Search</label>
+                        <input id="filter-search" type="text" placeholder="Search by ID, asset, description...">
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <table class="data-table">
+                        <thead><tr><th>ID</th><th>Asset Type</th><th>Asset ID</th><th>Location</th><th>Priority</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+                        <tbody id="complaints-tbody"><tr><td colspan="8" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        var allComplaints = [];
+
+        async function load() {
+            try {
+                allComplaints = await apiRequest('/complaints') || [];
+                render(allComplaints);
+            } catch(e) {
+                document.getElementById('complaints-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--danger);padding:40px">Failed to load complaints: ' + e.message + '</td></tr>';
+            }
+        }
+
+        function render(list) {
+            var tbody = document.getElementById('complaints-tbody');
+            if (list.length > 0) {
+                tbody.innerHTML = list.map(function(c) {
+                    var pClass = 'badge-medium';
+                    if (c.priority === 'Critical' || c.priority === 'Emergency') pClass = 'badge-critical';
+                    else if (c.priority === 'High') pClass = 'badge-high';
+                    else if (c.priority === 'Low') pClass = 'badge-low';
+                    var sClass = 'badge-blue';
+                    if (c.status === 'Completed') sClass = 'badge-green';
+                    else if (c.status === 'Deferred') sClass = 'badge-red';
+                    return '<tr>' +
+                        '<td><a href="complaint-details.html?id=' + c.complaint_id + '" style="color:var(--accent);font-weight:600">' + c.complaint_id + '</a></td>' +
+                        '<td>' + (c.asset_type || '') + '</td>' +
+                        '<td>' + (c.asset_id || '') + '</td>' +
+                        '<td>' + (c.city || '') + ', ' + (c.section_id || '') + '</td>' +
+                        '<td><span class="badge ' + pClass + '">' + (c.priority || c.initial_priority || '') + '</span></td>' +
+                        '<td><span class="badge ' + sClass + '">' + (c.status || '') + '</span></td>' +
+                        '<td>' + (c.created_at || '').split('T')[0] + '</td>' +
+                        '<td><a href="complaint-details.html?id=' + c.complaint_id + '" class="btn-secondary" style="font-size:11px;padding:5px 12px;text-decoration:none">View</a></td>' +
+                        '</tr>';
+                }).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No complaints found</td></tr>';
+            }
+        }
+
+        function applyFilters() {
+            var status = document.getElementById('filter-status').value;
+            var priority = document.getElementById('filter-priority').value;
+            var search = document.getElementById('filter-search').value.toLowerCase();
+            var filtered = allComplaints.filter(function(c) {
+                if (status && c.status !== status) return false;
+                if (priority && c.priority !== priority && c.initial_priority !== priority) return false;
+                if (search) {
+                    var haystack = (c.complaint_id + ' ' + c.asset_type + ' ' + c.asset_id + ' ' + c.description + ' ' + c.city + ' ' + c.section_id).toLowerCase();
+                    if (!haystack.includes(search)) return false;
+                }
+                return true;
+            });
+            render(filtered);
+        }
+
+        load();
+        document.getElementById('filter-status').addEventListener('change', applyFilters);
+        document.getElementById('filter-priority').addEventListener('change', applyFilters);
+        document.getElementById('filter-search').addEventListener('input', applyFilters);
+    })();
+    </script>
+</body>
+</html>

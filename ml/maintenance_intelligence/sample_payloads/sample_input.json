@@ -1,0 +1,10 @@
+{
+  "complaint_text": "Signal near S-02 is flickering.",
+  "asset_type": "Signal",
+  "asset_criticality": "Safety-Critical",
+  "current_status": "Interrupted",
+  "days_overdue": 2,
+  "failure_count_30_days": 2,
+  "safety_risk_level": "High",
+  "service_impact_level": "Major"
+}

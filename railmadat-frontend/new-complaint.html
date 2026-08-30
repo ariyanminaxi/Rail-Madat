@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Report Fault</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content" style="max-width:700px">
+                <a href="complaints.html" style="font-size:12px;color:var(--text-tertiary);margin-bottom:16px;display:inline-block">← Back to Complaints</a>
+                <form id="complaint-form">
+                    <h3 style="margin-bottom:16px">Location Details</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+                        <div class="field"><label>State</label><input id="state" required placeholder="e.g. Andhra Pradesh"></div>
+                        <div class="field"><label>City</label><input id="city" required placeholder="e.g. Vijayawada"></div>
+                        <div class="field"><label>Section ID</label><input id="section_id" required placeholder="e.g. S-02"></div>
+                    </div>
+                    <h3 style="margin:20px 0 16px">Asset Details</h3>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                        <div class="field"><label>Asset Type</label><select id="asset_type" required><option value="">Select...</option><option>Track</option><option>Signal</option><option>Electrical Equipment</option><option>Point Machine</option><option>Station Machinery</option></select></div>
+                        <div class="field"><label>Asset ID</label><input id="asset_id" required placeholder="e.g. SIG-S02-04"></div>
+                    </div>
+                    <h3 style="margin:20px 0 16px">Complaint Details</h3>
+                    <div class="field"><label>Description</label><textarea id="description" rows="5" required placeholder="Describe the fault in detail..."></textarea></div>
+                    <div id="form-msg" style="display:none;margin-bottom:16px"></div>
+                    <div style="display:flex;gap:12px">
+                        <button type="submit" class="btn-primary" id="submit-btn">Submit Complaint</button>
+                        <a href="complaints.html" class="btn-secondary" style="text-decoration:none">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+        document.getElementById('complaint-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('submit-btn');
+            var msg = document.getElementById('form-msg');
+            btn.disabled = true; btn.textContent = 'Submitting...'; msg.style.display = 'none';
+            try {
+                var data = await apiRequest('/complaints', { method: 'POST', body: {
+                    state: document.getElementById('state').value,
+                    city: document.getElementById('city').value,
+                    section_id: document.getElementById('section_id').value,
+                    asset_type: document.getElementById('asset_type').value,
+                    asset_id: document.getElementById('asset_id').value,
+                    description: document.getElementById('description').value
+                }});
+                msg.className = 'form-success'; msg.textContent = 'Complaint submitted successfully! ID: ' + (data.complaint_id||'');
+                msg.style.display = 'block'; btn.textContent = 'Submitted';
+            } catch(err) {
+                msg.className = 'form-error'; msg.textContent = err.message; msg.style.display = 'block';
+                btn.disabled = false; btn.textContent = 'Submit Complaint';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

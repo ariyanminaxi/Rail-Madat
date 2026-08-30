@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Assigned Tasks</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div class="panel">
+                    <table class="data-table">
+                        <thead><tr><th>Task ID</th><th>Complaint</th><th>Asset</th><th>Department</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="tasks-tbody"><tr><td colspan="7" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+        async function load() {
+            try {
+                var data = await apiRequest('/tasks');
+                var tbody = document.getElementById('tasks-tbody');
+                if (data && data.length > 0) {
+                    tbody.innerHTML = data.map(function(t) {
+                        var pClass = t.priority==='Critical'?'badge-critical':t.priority==='High'?'badge-high':'badge-medium';
+                        var sClass = t.status==='Completed'?'badge-green':t.status==='Emergency'?'badge-red':'badge-blue';
+                        return '<tr><td><strong style="color:var(--text-primary)">'+t.task_id+'</strong></td><td>'+(t.complaint_id||'-')+'</td><td>'+(t.asset_id||'-')+'</td><td>'+t.department+'</td><td><span class="badge '+pClass+'">'+t.priority+'</span></td><td><span class="badge '+sClass+'">'+(t.status||'').replace(/_/g,' ')+'</span></td><td><a href="work-completion.html?task='+t.task_id+'" class="btn-primary" style="font-size:11px;padding:6px 12px;text-decoration:none">Report</a></td></tr>';
+                    }).join('');
+                } else { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No tasks assigned</td></tr>'; }
+            } catch(e) { document.getElementById('tasks-tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--danger);padding:40px">Failed to load tasks</td></tr>'; }
+        }
+        load();
+    })();
+    </script>
+</body>
+</html>

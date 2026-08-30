@@ -1,0 +1,7 @@
+task_id,asset_id,section_id,previous_status,new_status,changed_at,changed_by,reason
+T-001,SIG-S02-04,S-02,Reported,Assigned,2026-04-30T10:00:00+05:30,system,Auto-assigned to team
+T-001,SIG-S02-04,S-02,Assigned,In Progress,2026-05-01T09:00:00+05:30,TEAM-SIG-01,Work started
+T-001,SIG-S02-04,S-02,In Progress,Completed,2026-05-01T14:00:00+05:30,TEAM-SIG-01,Work completed
+T-002,TRK-S01-02,S-01,Reported,Assigned,2026-06-09T10:00:00+05:30,system,Auto-assigned to team
+T-002,TRK-S01-02,S-01,Assigned,In Progress,2026-06-10T08:00:00+05:30,TEAM-TRK-01,Work started
+T-002,TRK-S01-02,S-01,In Progress,Interrupted,2026-06-10T09:30:00+05:30,TEAM-TRK-01,Train conflict forced interruption

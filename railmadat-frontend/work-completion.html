@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Work Completion</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content" style="max-width:700px">
+                <a href="assigned-tasks.html" style="font-size:12px;color:var(--text-tertiary);margin-bottom:16px;display:inline-block">← Back to Tasks</a>
+                <div class="panel" style="padding:24px">
+                    <h3 style="margin-bottom:16px">Work Completion Report</h3>
+                    <div class="field"><label>Work Status</label><select id="work-status"><option>Completed</option><option>Partially Completed</option><option>Interrupted</option><option>Not Completed</option></select></div>
+                    <div class="field"><label>Completion Percentage</label><input type="range" id="completion-pct" min="0" max="100" value="100" oninput="document.getElementById('pct-val').textContent=this.value+'%'"><span id="pct-val" style="color:var(--accent);font-weight:700">100%</span></div>
+                    <div class="field"><label>Inspection Result</label><select><option>No Fault Found</option><option>Minor Defect Found</option><option>Major Defect Found</option><option>Satisfactory</option></select></div>
+                    <div class="field"><label>Safety Status</label><select><option>Verified</option><option>Unsafe</option></select></div>
+                    <div class="field"><label>Work Description</label><textarea rows="4" placeholder="Describe work performed..."></textarea></div>
+                    <div class="field"><label>Materials Used</label><textarea rows="2" placeholder="List materials used..."></textarea></div>
+                    <div id="form-msg" style="display:none;margin-bottom:16px"></div>
+                    <button type="button" class="btn-primary" onclick="document.getElementById('form-msg').className='form-success';document.getElementById('form-msg').textContent='Report submitted!';document.getElementById('form-msg').style.display='block'">Submit Report</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
+    <script>if(!AUTH.requireAuth()){};</script>
+</body>
+</html>

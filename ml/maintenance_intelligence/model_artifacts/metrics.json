@@ -1,0 +1,431 @@
+{
+  "accuracy": 0.6916666666666667,
+  "macro_f1": 0.6403684134226814,
+  "weighted_f1": 0.6711150073995342,
+  "per_class_metrics": {
+    "department": {
+      "Civil": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 2.0
+      },
+      "Electrical": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 9.0
+      },
+      "Mechanical": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5.0
+      },
+      "Signalling": {
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.5,
+        "support": 3.0
+      },
+      "Telecom": {
+        "precision": 0.7777777777777778,
+        "recall": 1.0,
+        "f1-score": 0.875,
+        "support": 7.0
+      },
+      "Track": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 4.0
+      },
+      "accuracy": 0.9333333333333333,
+      "macro avg": {
+        "precision": 0.9629629629629629,
+        "recall": 0.888888888888889,
+        "f1-score": 0.8958333333333334,
+        "support": 30.0
+      },
+      "weighted avg": {
+        "precision": 0.9481481481481481,
+        "recall": 0.9333333333333333,
+        "f1-score": 0.9208333333333333,
+        "support": 30.0
+      }
+    },
+    "fault_category": {
+      "Ballast issue": {
+        "precision": 0.75,
+        "recall": 1.0,
+        "f1-score": 0.8571428571428571,
+        "support": 3.0
+      },
+      "Communication failure": {
+        "precision": 0.7777777777777778,
+        "recall": 1.0,
+        "f1-score": 0.875,
+        "support": 7.0
+      },
+      "Electrical fault": {
+        "precision": 1.0,
+        "recall": 0.8888888888888888,
+        "f1-score": 0.9411764705882353,
+        "support": 9.0
+      },
+      "Mechanical failure": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 5.0
+      },
+      "Signal malfunction": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 2.0
+      },
+      "Structural damage": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1-score": 0.8,
+        "support": 2.0
+      },
+      "Switch failure": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 1.0
+      },
+      "Track defect": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 1.0
+      },
+      "accuracy": 0.8666666666666667,
+      "macro avg": {
+        "precision": 0.6493055555555556,
+        "recall": 0.7361111111111112,
+        "f1-score": 0.6841649159663865,
+        "support": 30.0
+      },
+      "weighted avg": {
+        "precision": 0.8009259259259258,
+        "recall": 0.8666666666666667,
+        "f1-score": 0.8255672268907563,
+        "support": 30.0
+      }
+    },
+    "severity": {
+      "Critical": {
+        "precision": 0.25,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.2857142857142857,
+        "support": 3.0
+      },
+      "High": {
+        "precision": 0.4,
+        "recall": 0.3333333333333333,
+        "f1-score": 0.36363636363636365,
+        "support": 6.0
+      },
+      "Low": {
+        "precision": 1.0,
+        "recall": 0.3076923076923077,
+        "f1-score": 0.47058823529411764,
+        "support": 13.0
+      },
+      "Medium": {
+        "precision": 0.4117647058823529,
+        "recall": 0.875,
+        "f1-score": 0.56,
+        "support": 8.0
+      },
+      "accuracy": 0.4666666666666667,
+      "macro avg": {
+        "precision": 0.5154411764705882,
+        "recall": 0.4623397435897436,
+        "f1-score": 0.4199847211611918,
+        "support": 30.0
+      },
+      "weighted avg": {
+        "precision": 0.6481372549019607,
+        "recall": 0.4666666666666667,
+        "f1-score": 0.45455360325948563,
+        "support": 30.0
+      }
+    },
+    "base_priority": {
+      "Critical": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1-score": 0.6666666666666666,
+        "support": 4.0
+      },
+      "Emergency": {
+        "precision": 0.5,
+        "recall": 1.0,
+        "f1-score": 0.6666666666666666,
+        "support": 1.0
+      },
+      "High": {
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1-score": 0.5714285714285714,
+        "support": 2.0
+      },
+      "Low": {
+        "precision": 0.42857142857142855,
+        "recall": 0.6666666666666666,
+        "f1-score": 0.5217391304347826,
+        "support": 9.0
+      },
+      "Medium": {
+        "precision": 0.5714285714285714,
+        "recall": 0.2857142857142857,
+        "f1-score": 0.38095238095238093,
+        "support": 14.0
+      },
+      "accuracy": 0.5,
+      "macro avg": {
+        "precision": 0.5799999999999998,
+        "recall": 0.6904761904761905,
+        "f1-score": 0.5614906832298137,
+        "support": 30.0
+      },
+      "weighted avg": {
+        "precision": 0.5719047619047619,
+        "recall": 0.5,
+        "f1-score": 0.48350586611456176,
+        "support": 30.0
+      }
+    }
+  },
+  "confusion_matrix": {
+    "department": [
+      [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        9,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        5,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        7,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4
+      ]
+    ],
+    "fault_category": [
+      [
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        8,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "severity": [
+      [
+        1,
+        2,
+        0,
+        0
+      ],
+      [
+        3,
+        2,
+        0,
+        1
+      ],
+      [
+        0,
+        0,
+        4,
+        9
+      ],
+      [
+        0,
+        1,
+        0,
+        7
+      ]
+    ],
+    "base_priority": [
+      [
+        2,
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        6,
+        3
+      ],
+      [
+        0,
+        0,
+        2,
+        8,
+        4
+      ]
+    ]
+  },
+  "low_confidence_cases": [
+    {
+      "target": "department",
+      "count": 1,
+      "threshold": 0.5
+    },
+    {
+      "target": "fault_category",
+      "count": 3,
+      "threshold": 0.5
+    },
+    {
+      "target": "severity",
+      "count": 10,
+      "threshold": 0.5
+    },
+    {
+      "target": "base_priority",
+      "count": 8,
+      "threshold": 0.5
+    }
+  ],
+  "n_test_samples": 30,
+  "target_columns": [
+    "department",
+    "fault_category",
+    "severity",
+    "base_priority"
+  ]
+}

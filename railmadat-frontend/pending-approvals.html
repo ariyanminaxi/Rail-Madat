@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Pending Approvals</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div class="panel">
+                    <div class="panel-header"><div><h3>Approval Queue</h3><p>Maintenance blocks awaiting approval</p></div></div>
+                    <table class="data-table">
+                        <thead><tr><th>Block ID</th><th>Section</th><th>Start</th><th>End</th><th>Tasks</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="blocks-tbody"><tr><td colspan="7" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
+    <script>
+    (function(){if(!AUTH.requireAuth())return;
+        document.getElementById('blocks-tbody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals</td></tr>';
+    })();
+    </script>
+</body>
+</html>

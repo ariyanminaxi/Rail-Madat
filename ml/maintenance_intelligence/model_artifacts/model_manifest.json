@@ -1,0 +1,19 @@
+{
+  "model_name": "maintenance_classifier",
+  "model_version": "0.1.0",
+  "trained_at": "2026-08-25T17:51:21.257474+00:00",
+  "dataset_name": "maintenance_cases.csv",
+  "dataset_version": "1.0.0",
+  "algorithm": "TF-IDF + Logistic Regression",
+  "python_version": "3.14.3",
+  "scikit_learn_version": "1.8.0",
+  "confidence_threshold": 0.75,
+  "n_training_samples": 140,
+  "n_features": 8,
+  "target_columns": [
+    "department",
+    "fault_category",
+    "severity",
+    "base_priority"
+  ]
+}

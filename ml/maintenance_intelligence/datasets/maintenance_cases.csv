@@ -1,0 +1,201 @@
+case_id,complaint_text,asset_type,asset_criticality,current_status,days_overdue,failure_count_30_days,deferral_count,reopen_count,safety_risk_level,service_impact_level,department,fault_category,severity,base_priority,verified_by_human
+TC-001,Point machine jammed at S-06,Mechanical,Non-Critical,Escalated,0,2,0,0,Low,Negligible,Mechanical,Mechanical failure,Medium,Low,1
+TC-002,Signal control panel unresponsive at S-22,Track,Important,New,2,0,0,0,Low,Major,Signalling,Switch failure,Low,Low,1
+TC-003,Conductor rail support bracket corroded at S-08,Electrical,Operational,Cancelled,0,3,0,0,Medium,Negligible,Electrical,Electrical fault,Low,Medium,1
+TC-004,Level crossing barrier not operating at S-06,Civil,Non-Critical,Assigned,1,0,0,0,High,Severe,Civil,Structural damage,Medium,Medium,1
+TC-005,Signal aspect showing wrong colour at S-30,Signal,Operational,In Progress,1,2,0,0,Extreme,Minor,Signalling,Signal malfunction,Critical,Critical,1
+TC-006,Level crossing barrier not operating at S-26,Civil,Operational,Completed,1,2,0,0,High,Minor,Civil,Structural damage,Medium,Medium,1
+TC-007,Transformer oil leak at substation S-16,Electrical,Non-Critical,Completed,0,1,0,0,High,Major,Electrical,Electrical fault,Medium,High,1
+TC-008,Point machine jammed at S-08,Mechanical,Important,Assigned,1,0,0,0,High,Severe,Mechanical,Mechanical failure,High,Medium,1
+TC-009,Switch blades not sealing properly at KM-190,Mechanical,Operational,Escalated,2,1,0,0,High,Minor,Signalling,Switch failure,Medium,Medium,1
+TC-010,Insulator flashover on OHE mast KM-110,Electrical,Safety-Critical,Assigned,0,2,0,0,Low,Minor,Electrical,Electrical fault,Low,Low,1
+TC-011,Telecom cable cut near S-08,Telecom,Important,New,5,1,0,0,High,Major,Telecom,Communication failure,High,High,1
+TC-012,Conductor rail support bracket corroded at S-09,Electrical,Safety-Critical,Completed,7,4,0,0,Medium,Negligible,Electrical,Electrical fault,Medium,Low,1
+TC-013,Defective axle counter at station S-29,Mechanical,Important,Interrupted,1,0,0,0,Low,Severe,Signalling,Signal malfunction,Medium,Medium,1
+TC-014,Communication failure at station S-05,Telecom,Important,Assigned,2,1,0,0,Low,Negligible,Telecom,Communication failure,Low,Low,1
+TC-015,Sleeper deterioration near S-13,Track,Safety-Critical,New,0,0,0,0,Low,Major,Track,Ballast issue,Low,Medium,1
+TC-016,Track geometry irregularity at S-07,Track,Non-Critical,In Progress,5,2,0,0,Medium,Minor,Track,Track defect,Low,Medium,1
+TC-017,Switch blades not sealing properly at S-01,Track,Operational,In Progress,0,4,0,0,Medium,Minor,Signalling,Switch failure,Low,Low,1
+TC-018,Broken rail detected near S-25,Track,Safety-Critical,Completed,0,1,0,0,Low,Minor,Track,Track defect,Low,Medium,1
+TC-019,Insulator flashover on OHE mast S-14,Electrical,Safety-Critical,Completed,5,2,0,0,Low,Major,Electrical,Electrical fault,Low,Low,1
+TC-020,Rail head shelling in section S-05,Track,Important,Interrupted,2,1,0,0,High,Negligible,Track,Track defect,Medium,Medium,1
+TC-021,Telecom repeater station malfunction at KM-70,Telecom,Non-Critical,Completed,2,1,0,0,Medium,Severe,Telecom,Communication failure,Low,Medium,1
+TC-022,Telecom cable cut near S-01,Telecom,Operational,Assigned,0,0,0,0,High,Minor,Telecom,Communication failure,High,High,1
+TC-023,Level crossing barrier not operating at S-19,Civil,Important,Interrupted,2,0,0,0,Low,Major,Civil,Structural damage,Low,Low,1
+TC-024,Defective axle counter at station S-08,Civil,Safety-Critical,Escalated,3,0,0,0,High,Severe,Signalling,Switch failure,High,High,1
+TC-025,Broken rail detected near S-06,Track,Safety-Critical,New,1,2,0,0,Low,Minor,Track,Ballast issue,Medium,Medium,1
+TC-026,Point machine jammed at S-05,Mechanical,Important,Assigned,3,0,0,0,Low,Major,Mechanical,Mechanical failure,Medium,Low,1
+TC-027,Coupler knuckle fracture near S-14,Mechanical,Safety-Critical,Interrupted,0,0,0,0,Extreme,Major,Mechanical,Mechanical failure,High,Critical,1
+TC-028,Brake cylinder pressure loss at S-27,Mechanical,Operational,New,1,1,0,0,High,Severe,Mechanical,Mechanical failure,Medium,Medium,1
+TC-029,Broken rail detected near S-25,Track,Operational,Completed,3,2,0,0,High,Minor,Track,Track defect,High,Medium,1
+TC-030,Rail head shelling in section S-26,Track,Safety-Critical,Assigned,1,2,0,0,Extreme,Minor,Track,Track defect,Critical,Critical,1
+TC-031,Insulator flashover on OHE mast S-12,Electrical,Operational,New,2,2,0,0,High,Minor,Electrical,Electrical fault,Medium,Medium,1
+TC-032,Fibre optic cable damaged near S-03,Telecom,Safety-Critical,Assigned,5,0,0,0,Low,Minor,Telecom,Communication failure,Medium,Low,1
+TC-033,Point machine jammed at KM-130,Mechanical,Important,Interrupted,14,2,0,0,Extreme,Major,Mechanical,Mechanical failure,High,Emergency,1
+TC-034,Conductor rail support bracket corroded at S-09,Electrical,Important,Reopened,2,2,0,0,Low,Severe,Electrical,Electrical fault,Medium,Medium,1
+TC-035,Signal aspect showing wrong colour at S-28,Civil,Important,In Progress,2,1,0,0,High,Minor,Signalling,Signal malfunction,High,High,1
+TC-036,Telecom repeater station malfunction at KM-130,Telecom,Important,Assigned,2,2,0,0,Medium,Major,Telecom,Communication failure,Low,Medium,1
+TC-037,Brake cylinder pressure loss at KM-10,Mechanical,Important,New,1,3,0,0,Extreme,Minor,Mechanical,Mechanical failure,Critical,Critical,1
+TC-038,Communication failure at station KM-120,Telecom,Safety-Critical,New,0,2,0,0,Medium,Major,Telecom,Communication failure,Medium,Low,1
+TC-039,Point machine jammed at S-30,Mechanical,Non-Critical,Completed,1,0,0,0,High,Negligible,Mechanical,Mechanical failure,Medium,Medium,1
+TC-040,Signal control panel unresponsive at S-29,Civil,Important,Cancelled,7,1,0,0,High,Severe,Signalling,Switch failure,High,Medium,1
+TC-041,Transformer oil leak at substation S-18,Electrical,Safety-Critical,Completed,2,0,0,0,Low,Major,Electrical,Electrical fault,Low,Medium,1
+TC-042,Insulator flashover on OHE mast KM-50,Electrical,Operational,Interrupted,3,2,0,0,Low,Minor,Electrical,Electrical fault,Medium,Medium,1
+TC-043,Level crossing barrier not operating at S-20,Civil,Important,Assigned,2,2,0,0,Medium,Severe,Civil,Structural damage,Medium,Low,1
+TC-044,Level crossing barrier not operating at S-28,Civil,Safety-Critical,Cancelled,2,1,0,0,Medium,Major,Civil,Structural damage,Medium,Low,1
+TC-045,Foundation settlement at KM-70,Civil,Non-Critical,Assigned,0,1,0,0,High,Minor,Civil,Structural damage,Medium,High,1
+TC-046,Coupler knuckle fracture near KM-190,Mechanical,Non-Critical,Reopened,0,0,0,0,Low,Minor,Mechanical,Mechanical failure,Medium,Medium,1
+TC-047,Tunnel lining showing water seepage at KM-120,Civil,Operational,Cancelled,2,2,0,0,Medium,Severe,Civil,Structural damage,Medium,Low,1
+TC-048,Track geometry irregularity at S-24,Track,Safety-Critical,Completed,0,0,0,0,Low,Negligible,Track,Track defect,Low,Medium,1
+TC-049,Signal control panel unresponsive at KM-160,Telecom,Important,Escalated,30,0,0,0,Low,Severe,Signalling,Signal malfunction,Medium,Medium,1
+TC-050,Switch blades not sealing properly at S-28,Signal,Important,Completed,1,2,0,0,Low,Major,Signalling,Signal malfunction,Low,Medium,1
+TC-051,Bearing failure on wagon at S-12,Mechanical,Operational,Interrupted,7,0,0,0,Medium,Severe,Mechanical,Mechanical failure,Medium,Low,1
+TC-052,Point machine jammed at S-18,Mechanical,Important,Reopened,5,1,0,0,High,Severe,Mechanical,Mechanical failure,High,Medium,1
+TC-053,Level crossing barrier not operating at S-17,Civil,Operational,In Progress,0,3,0,0,High,Minor,Civil,Structural damage,High,Medium,1
+TC-054,Conductor rail support bracket corroded at KM-190,Electrical,Operational,Interrupted,2,0,0,0,Extreme,Major,Electrical,Electrical fault,High,Emergency,1
+TC-055,Signal control panel unresponsive at KM-60,Mechanical,Important,Escalated,0,1,0,0,Medium,Negligible,Signalling,Signal malfunction,Medium,Medium,1
+TC-056,Fibre optic cable damaged near S-08,Telecom,Operational,Cancelled,2,0,0,0,High,Minor,Telecom,Communication failure,Medium,Medium,1
+TC-057,Coupler knuckle fracture near S-15,Mechanical,Important,Completed,2,2,0,0,Low,Minor,Mechanical,Mechanical failure,Low,Low,1
+TC-058,Overhead line conductor sagging near KM-70,Electrical,Operational,New,30,1,0,0,Medium,Minor,Electrical,Electrical fault,Medium,Low,1
+TC-059,Overhead line conductor sagging near KM-70,Electrical,Important,In Progress,14,1,0,0,Low,Negligible,Electrical,Electrical fault,Medium,Medium,1
+TC-060,Bearing failure on wagon at S-29,Mechanical,Important,New,0,0,0,0,Extreme,Severe,Mechanical,Mechanical failure,Critical,Emergency,1
+TC-061,Overhead line conductor sagging near S-11,Electrical,Safety-Critical,Cancelled,3,2,0,0,Medium,Major,Electrical,Electrical fault,Low,Medium,1
+TC-062,Signal near KM-140 is flickering intermittently,Track,Important,New,2,0,0,0,Medium,Major,Signalling,Switch failure,Medium,Medium,1
+TC-063,Signal near S-04 is flickering intermittently,Electrical,Safety-Critical,Reopened,1,1,0,0,High,Severe,Signalling,Signal malfunction,Critical,High,1
+TC-064,Signal control panel unresponsive at S-06,Electrical,Important,Completed,2,0,0,0,Extreme,Minor,Signalling,Switch failure,High,Emergency,1
+TC-065,Communication failure at station KM-10,Telecom,Non-Critical,In Progress,0,4,0,0,Medium,Minor,Telecom,Communication failure,Medium,Low,1
+TC-066,Signal cable insulation breakdown at S-22,Telecom,Important,Completed,3,1,0,0,Low,Major,Telecom,Communication failure,Medium,Medium,1
+TC-067,Insulator flashover on OHE mast S-17,Electrical,Important,Completed,0,4,0,0,Medium,Major,Electrical,Electrical fault,Medium,Low,1
+TC-068,Transformer oil leak at substation KM-40,Electrical,Non-Critical,Completed,0,3,0,0,Extreme,Severe,Electrical,Electrical fault,High,Critical,1
+TC-069,Overhead line conductor sagging near S-02,Electrical,Important,In Progress,0,0,0,0,Medium,Negligible,Electrical,Electrical fault,Medium,Medium,1
+TC-070,Brake cylinder pressure loss at KM-20,Mechanical,Important,Assigned,2,0,0,0,Low,Major,Mechanical,Mechanical failure,Medium,Low,1
+TC-071,Gearbox oil leak at KM-30,Mechanical,Operational,Escalated,2,1,0,0,Medium,Minor,Mechanical,Mechanical failure,Medium,Low,1
+TC-072,Coupler knuckle fracture near KM-80,Mechanical,Safety-Critical,Completed,1,4,0,0,Low,Major,Mechanical,Mechanical failure,Low,Medium,1
+TC-073,Communication failure at station KM-150,Telecom,Safety-Critical,In Progress,1,1,0,0,Low,Major,Telecom,Communication failure,Medium,Medium,1
+TC-074,Signal control panel unresponsive at S-03,Telecom,Operational,Completed,2,4,0,0,Medium,Minor,Signalling,Switch failure,Medium,Low,1
+TC-075,Signal aspect showing wrong colour at S-05,Telecom,Safety-Critical,Assigned,0,4,0,0,Low,Severe,Signalling,Signal malfunction,Low,Medium,1
+TC-076,Foundation settlement at S-03,Civil,Safety-Critical,Assigned,0,0,0,0,High,Minor,Civil,Structural damage,Critical,Critical,1
+TC-077,Communication failure at station KM-150,Telecom,Non-Critical,Reopened,5,1,0,0,Extreme,Severe,Telecom,Communication failure,Critical,Emergency,1
+TC-078,Transformer oil leak at substation S-06,Electrical,Safety-Critical,New,1,0,0,0,High,Minor,Electrical,Electrical fault,High,High,1
+TC-079,Telecom cable cut near S-30,Telecom,Safety-Critical,Reopened,0,1,0,0,Low,Severe,Telecom,Communication failure,Medium,Medium,1
+TC-080,Insulator flashover on OHE mast S-13,Electrical,Important,New,2,1,0,0,Medium,Minor,Electrical,Electrical fault,Medium,Medium,1
+TC-081,Tunnel lining showing water seepage at KM-70,Civil,Safety-Critical,New,0,2,0,0,Medium,Minor,Civil,Structural damage,Medium,Medium,1
+TC-082,Brake cylinder pressure loss at KM-100,Mechanical,Safety-Critical,Cancelled,7,4,0,0,Extreme,Major,Mechanical,Mechanical failure,High,Critical,1
+TC-083,Overhead line conductor sagging near KM-80,Electrical,Important,Escalated,3,4,0,0,High,Severe,Electrical,Electrical fault,High,High,1
+TC-084,Insulator flashover on OHE mast KM-10,Electrical,Safety-Critical,New,0,0,0,0,Low,Major,Electrical,Electrical fault,Medium,Low,1
+TC-085,Catenary dropper broken near S-01,Electrical,Safety-Critical,Assigned,0,4,0,0,Low,Severe,Electrical,Electrical fault,Medium,Low,1
+TC-086,Catenary dropper broken near S-02,Electrical,Important,In Progress,2,3,0,0,High,Major,Electrical,Electrical fault,Medium,Medium,1
+TC-087,Communication failure at station S-03,Telecom,Safety-Critical,Interrupted,0,3,0,0,Extreme,Minor,Telecom,Communication failure,High,Critical,1
+TC-088,Broken rail detected near KM-20,Track,Operational,In Progress,0,1,0,0,Low,Severe,Track,Ballast issue,Low,Medium,1
+TC-089,Telecom repeater station malfunction at KM-120,Telecom,Important,Cancelled,1,4,0,0,Low,Minor,Telecom,Communication failure,Low,Medium,1
+TC-090,Insulator flashover on OHE mast S-16,Electrical,Non-Critical,Assigned,7,0,0,0,Extreme,Severe,Electrical,Electrical fault,Critical,Critical,1
+TC-091,Signal aspect showing wrong colour at S-09,Telecom,Operational,Completed,7,0,0,0,High,Major,Signalling,Signal malfunction,Medium,High,1
+TC-092,Communication failure at station S-17,Telecom,Operational,New,0,2,0,0,High,Negligible,Telecom,Communication failure,High,Medium,1
+TC-093,Ballast pumping under sleepers at S-03,Track,Non-Critical,In Progress,1,0,0,0,Low,Negligible,Track,Track defect,Medium,Low,1
+TC-094,Point machine jammed at KM-20,Mechanical,Safety-Critical,Completed,30,0,0,0,Medium,Minor,Mechanical,Mechanical failure,Medium,Medium,1
+TC-095,Bearing failure on wagon at KM-30,Mechanical,Safety-Critical,New,0,0,0,0,Low,Major,Mechanical,Mechanical failure,Medium,Medium,1
+TC-096,Communication failure at station S-27,Telecom,Important,Completed,7,1,0,0,Low,Major,Telecom,Communication failure,Medium,Medium,1
+TC-097,Overhead line conductor sagging near S-06,Electrical,Safety-Critical,In Progress,1,0,0,0,High,Minor,Electrical,Electrical fault,Critical,High,1
+TC-098,Track geometry irregularity at KM-130,Track,Important,Escalated,0,4,0,0,Medium,Negligible,Track,Ballast issue,Low,Medium,1
+TC-099,Bridge deck spalling concrete near S-07,Civil,Safety-Critical,Escalated,1,1,0,0,Extreme,Major,Civil,Structural damage,Critical,Emergency,1
+TC-100,Transformer oil leak at substation S-18,Electrical,Safety-Critical,In Progress,7,3,0,0,High,Major,Electrical,Electrical fault,Critical,High,1
+TC-101,Point machine jammed at KM-180,Mechanical,Safety-Critical,Completed,0,2,0,0,Medium,Minor,Mechanical,Mechanical failure,Low,Low,1
+TC-102,Communication failure at station KM-190,Telecom,Operational,In Progress,5,2,0,0,Medium,Minor,Telecom,Communication failure,Low,Low,1
+TC-103,Signal cable insulation breakdown at S-08,Telecom,Non-Critical,New,3,1,0,0,Medium,Minor,Telecom,Communication failure,Low,Medium,1
+TC-104,Insulator flashover on OHE mast S-14,Electrical,Important,Interrupted,0,4,0,0,Medium,Minor,Electrical,Electrical fault,Low,Low,1
+TC-105,Signal control panel unresponsive at KM-180,Electrical,Operational,New,0,1,0,0,Medium,Minor,Signalling,Signal malfunction,Medium,Low,1
+TC-106,Sleeper deterioration near S-02,Track,Important,In Progress,1,1,0,0,Low,Minor,Track,Ballast issue,Medium,Low,1
+TC-107,Conductor rail support bracket corroded at S-26,Electrical,Operational,Completed,1,1,0,0,Medium,Major,Electrical,Electrical fault,Low,Medium,1
+TC-108,Fibre optic cable damaged near KM-170,Telecom,Non-Critical,Completed,5,0,0,0,High,Minor,Telecom,Communication failure,Medium,High,1
+TC-109,Bearing failure on wagon at KM-190,Mechanical,Safety-Critical,Assigned,3,2,0,0,Low,Minor,Mechanical,Mechanical failure,Low,Medium,1
+TC-110,Telecom cable cut near KM-10,Telecom,Safety-Critical,In Progress,3,1,0,0,Extreme,Major,Telecom,Communication failure,Critical,Emergency,1
+TC-111,Level crossing barrier not operating at S-05,Civil,Important,Completed,0,1,0,0,High,Minor,Civil,Structural damage,Medium,High,1
+TC-112,Coupler knuckle fracture near KM-90,Mechanical,Safety-Critical,Completed,2,1,0,0,High,Major,Mechanical,Mechanical failure,Critical,High,1
+TC-113,Bridge deck spalling concrete near KM-160,Civil,Important,Cancelled,7,4,0,0,Medium,Severe,Civil,Structural damage,Low,Low,1
+TC-114,Tunnel lining showing water seepage at S-22,Civil,Safety-Critical,Interrupted,14,0,0,0,High,Minor,Civil,Structural damage,High,Critical,1
+TC-115,Ballast pumping under sleepers at KM-130,Track,Important,In Progress,30,1,0,0,Low,Severe,Track,Track defect,Medium,Low,1
+TC-116,Switch blades not sealing properly at S-06,Electrical,Operational,Reopened,5,0,0,0,High,Negligible,Signalling,Switch failure,High,Medium,1
+TC-117,Brake cylinder pressure loss at S-10,Mechanical,Important,Interrupted,30,0,0,0,Low,Minor,Mechanical,Mechanical failure,Low,Low,1
+TC-118,Rail head shelling in section S-11,Track,Operational,Completed,5,1,0,0,Medium,Major,Track,Ballast issue,Low,Medium,1
+TC-119,Signal control panel unresponsive at S-15,Mechanical,Safety-Critical,Completed,1,2,0,0,Low,Minor,Signalling,Signal malfunction,Medium,Medium,1
+TC-120,Signal cable insulation breakdown at KM-30,Telecom,Operational,Cancelled,0,2,0,0,High,Severe,Telecom,Communication failure,High,High,1
+TC-121,Telecom repeater station malfunction at S-08,Telecom,Important,New,7,0,0,0,Low,Major,Telecom,Communication failure,Medium,Low,1
+TC-122,Overhead line conductor sagging near S-27,Electrical,Non-Critical,New,7,0,0,0,Medium,Major,Electrical,Electrical fault,Medium,Medium,1
+TC-123,Rail head shelling in section S-03,Track,Operational,In Progress,0,0,0,0,Medium,Negligible,Track,Track defect,Medium,Low,1
+TC-124,Transformer oil leak at substation S-10,Electrical,Safety-Critical,In Progress,2,1,0,0,Extreme,Major,Electrical,Electrical fault,Critical,Emergency,1
+TC-125,Telecom cable cut near S-08,Telecom,Safety-Critical,Reopened,0,0,0,0,Medium,Major,Telecom,Communication failure,Medium,Medium,1
+TC-126,Bridge deck spalling concrete near KM-130,Civil,Important,New,0,1,0,0,Medium,Minor,Civil,Structural damage,Low,Medium,1
+TC-127,Point machine jammed at KM-110,Mechanical,Non-Critical,Cancelled,2,4,0,0,Low,Major,Mechanical,Mechanical failure,Medium,Medium,1
+TC-128,Tunnel lining showing water seepage at S-23,Civil,Safety-Critical,Assigned,1,2,0,0,Low,Major,Civil,Structural damage,Medium,Low,1
+TC-129,Signal cable insulation breakdown at S-03,Telecom,Operational,Reopened,30,1,0,0,Extreme,Major,Telecom,Communication failure,Critical,Critical,1
+TC-130,Transformer oil leak at substation S-19,Electrical,Operational,Completed,1,0,0,0,Extreme,Minor,Electrical,Electrical fault,High,Critical,1
+TC-131,Insulator flashover on OHE mast S-12,Electrical,Safety-Critical,New,5,1,0,0,High,Minor,Electrical,Electrical fault,Critical,Critical,1
+TC-132,Level crossing barrier not operating at S-07,Civil,Important,In Progress,0,1,0,0,High,Minor,Civil,Structural damage,Medium,High,1
+TC-133,Ballast pumping under sleepers at S-28,Track,Operational,Assigned,0,1,0,0,Medium,Major,Track,Ballast issue,Low,Medium,1
+TC-134,Conductor rail support bracket corroded at KM-140,Electrical,Important,Completed,1,1,0,0,Low,Major,Electrical,Electrical fault,Low,Low,1
+TC-135,Level crossing barrier not operating at S-29,Civil,Non-Critical,New,1,1,0,0,High,Minor,Civil,Structural damage,High,High,1
+TC-136,Ballast pumping under sleepers at S-08,Track,Important,Interrupted,0,0,0,0,Medium,Major,Track,Track defect,Medium,Medium,1
+TC-137,Overhead line conductor sagging near S-29,Electrical,Safety-Critical,Escalated,3,4,0,0,Low,Major,Electrical,Electrical fault,Low,Low,1
+TC-138,Signal aspect showing wrong colour at KM-160,Mechanical,Important,New,1,0,0,0,High,Severe,Signalling,Signal malfunction,High,High,1
+TC-139,Point machine jammed at S-24,Mechanical,Safety-Critical,Reopened,0,0,0,0,High,Major,Mechanical,Mechanical failure,High,Critical,1
+TC-140,Signal cable insulation breakdown at KM-70,Telecom,Important,In Progress,7,0,0,0,Extreme,Negligible,Telecom,Communication failure,High,Emergency,1
+TC-141,Ballast pumping under sleepers at S-04,Track,Non-Critical,Assigned,2,0,0,0,Low,Minor,Track,Track defect,Low,Medium,1
+TC-142,Rail head shelling in section KM-110,Track,Important,Assigned,0,4,0,0,Low,Severe,Track,Ballast issue,Low,Medium,1
+TC-143,Telecom repeater station malfunction at S-03,Telecom,Operational,Reopened,3,1,0,0,High,Negligible,Telecom,Communication failure,Medium,High,1
+TC-144,Track geometry irregularity at KM-10,Track,Non-Critical,Completed,0,1,0,0,High,Minor,Track,Track defect,High,High,1
+TC-145,Defective axle counter at station KM-170,Mechanical,Important,In Progress,1,1,0,0,High,Minor,Signalling,Switch failure,Medium,High,1
+TC-146,Transformer oil leak at substation S-07,Electrical,Safety-Critical,New,1,1,0,0,Medium,Major,Electrical,Electrical fault,Medium,Low,1
+TC-147,Rail head shelling in section KM-20,Track,Operational,In Progress,7,0,0,0,High,Minor,Track,Ballast issue,High,Medium,1
+TC-148,Telecom cable cut near S-04,Telecom,Important,Completed,1,1,0,0,Medium,Negligible,Telecom,Communication failure,Low,Medium,1
+TC-149,Insulator flashover on OHE mast KM-190,Electrical,Important,Completed,2,3,0,0,High,Minor,Electrical,Electrical fault,Medium,High,1
+TC-150,Bridge deck spalling concrete near S-07,Civil,Operational,In Progress,2,0,0,0,High,Minor,Civil,Structural damage,High,Medium,1
+TC-151,Tunnel lining showing water seepage at S-09,Civil,Operational,Cancelled,0,1,0,0,High,Minor,Civil,Structural damage,Medium,Medium,1
+TC-152,Gearbox oil leak at KM-180,Mechanical,Operational,In Progress,2,0,0,0,Medium,Major,Mechanical,Mechanical failure,Low,Medium,1
+TC-153,Overhead line conductor sagging near S-27,Electrical,Important,Interrupted,2,1,0,0,Medium,Minor,Electrical,Electrical fault,Medium,Medium,1
+TC-154,Communication failure at station KM-40,Telecom,Operational,Completed,2,0,0,0,Extreme,Major,Telecom,Communication failure,Critical,Emergency,1
+TC-155,Bearing failure on wagon at S-21,Mechanical,Safety-Critical,Completed,0,1,0,0,Medium,Severe,Mechanical,Mechanical failure,Low,Low,1
+TC-156,Foundation settlement at S-21,Civil,Operational,Escalated,14,3,0,0,Medium,Major,Civil,Structural damage,Low,Low,1
+TC-157,Brake cylinder pressure loss at S-18,Mechanical,Important,In Progress,2,1,0,0,Extreme,Minor,Mechanical,Mechanical failure,High,Critical,1
+TC-158,Fibre optic cable damaged near KM-60,Telecom,Operational,Completed,5,2,0,0,Extreme,Major,Telecom,Communication failure,High,Emergency,1
+TC-159,Coupler knuckle fracture near KM-160,Mechanical,Operational,New,30,3,0,0,High,Minor,Mechanical,Mechanical failure,High,Medium,1
+TC-160,Ballast pumping under sleepers at KM-180,Track,Operational,In Progress,0,1,0,0,Low,Minor,Track,Ballast issue,Low,Low,1
+TC-161,Communication failure at station S-01,Telecom,Operational,New,0,0,0,0,Extreme,Minor,Telecom,Communication failure,High,Critical,1
+TC-162,Telecom cable cut near S-06,Telecom,Safety-Critical,New,2,2,0,0,High,Severe,Telecom,Communication failure,Critical,Critical,1
+TC-163,Bearing failure on wagon at S-12,Mechanical,Important,Interrupted,14,0,0,0,High,Severe,Mechanical,Mechanical failure,Medium,High,1
+TC-164,Gearbox oil leak at KM-40,Mechanical,Safety-Critical,Completed,2,0,0,0,Extreme,Negligible,Mechanical,Mechanical failure,High,Emergency,1
+TC-165,Tunnel lining showing water seepage at KM-180,Civil,Safety-Critical,New,7,0,0,0,Medium,Minor,Civil,Structural damage,Medium,Low,1
+TC-166,Catenary dropper broken near KM-130,Electrical,Safety-Critical,Interrupted,7,3,0,0,High,Minor,Electrical,Electrical fault,Critical,High,1
+TC-167,Ballast pumping under sleepers at KM-170,Track,Operational,New,0,0,0,0,Medium,Minor,Track,Ballast issue,Medium,Medium,1
+TC-168,Fibre optic cable damaged near S-24,Telecom,Non-Critical,Reopened,0,0,0,0,High,Negligible,Telecom,Communication failure,High,Medium,1
+TC-169,Telecom repeater station malfunction at S-06,Telecom,Operational,Cancelled,30,0,0,0,Medium,Minor,Telecom,Communication failure,Low,Low,1
+TC-170,Fibre optic cable damaged near KM-40,Telecom,Important,Escalated,0,1,0,0,Low,Major,Telecom,Communication failure,Low,Low,1
+TC-171,Platform edge damaged near KM-70,Civil,Non-Critical,Assigned,2,3,0,0,High,Negligible,Civil,Structural damage,Medium,High,1
+TC-172,Sleeper deterioration near S-23,Track,Important,Reopened,0,0,0,0,Medium,Negligible,Track,Track defect,Low,Low,1
+TC-173,Bearing failure on wagon at S-24,Mechanical,Non-Critical,Cancelled,14,0,0,0,Extreme,Negligible,Mechanical,Mechanical failure,Critical,Critical,1
+TC-174,Bridge deck spalling concrete near KM-50,Civil,Important,Completed,30,3,0,0,Medium,Negligible,Civil,Structural damage,Medium,Low,1
+TC-175,Bridge deck spalling concrete near S-30,Civil,Important,Escalated,0,0,0,0,Low,Negligible,Civil,Structural damage,Medium,Low,1
+TC-176,Overhead line conductor sagging near S-07,Electrical,Operational,New,0,2,0,0,Extreme,Major,Electrical,Electrical fault,Critical,Critical,1
+TC-177,Communication failure at station KM-30,Telecom,Non-Critical,Interrupted,5,1,0,0,High,Negligible,Telecom,Communication failure,Medium,Medium,1
+TC-178,Conductor rail support bracket corroded at S-15,Electrical,Operational,Completed,5,3,0,0,High,Major,Electrical,Electrical fault,High,Medium,1
+TC-179,Level crossing barrier not operating at KM-120,Civil,Operational,New,14,1,0,0,Extreme,Severe,Civil,Structural damage,High,Critical,1
+TC-180,Coupler knuckle fracture near KM-160,Mechanical,Operational,Interrupted,0,0,0,0,High,Minor,Mechanical,Mechanical failure,Medium,Medium,1
+TC-181,Signal control panel unresponsive at S-24,Civil,Safety-Critical,Interrupted,0,0,0,0,Extreme,Major,Signalling,Signal malfunction,High,Critical,1
+TC-182,Sleeper deterioration near S-14,Track,Important,Completed,3,0,0,0,Low,Minor,Track,Track defect,Low,Low,1
+TC-183,Catenary dropper broken near S-16,Electrical,Operational,Completed,5,2,0,0,Low,Minor,Electrical,Electrical fault,Low,Low,1
+TC-184,Signal cable insulation breakdown at KM-190,Telecom,Operational,Assigned,1,0,0,0,Medium,Major,Telecom,Communication failure,Medium,Low,1
+TC-185,Transformer oil leak at substation S-13,Electrical,Safety-Critical,In Progress,0,0,0,0,Medium,Major,Electrical,Electrical fault,Medium,Medium,1
+TC-186,Transformer oil leak at substation KM-170,Electrical,Operational,Interrupted,14,0,0,0,Low,Major,Electrical,Electrical fault,Medium,Medium,1
+TC-187,Overhead line conductor sagging near KM-190,Electrical,Operational,Escalated,2,1,0,0,Medium,Severe,Electrical,Electrical fault,Low,Low,1
+TC-188,Sleeper deterioration near S-02,Track,Important,Completed,0,1,0,0,Low,Major,Track,Ballast issue,Low,Medium,1
+TC-189,Broken rail detected near KM-40,Track,Important,In Progress,2,0,0,0,Low,Major,Track,Ballast issue,Low,Low,1
+TC-190,Signal aspect showing wrong colour at S-20,Track,Operational,Interrupted,1,0,0,0,Extreme,Minor,Signalling,Switch failure,High,Critical,1
+TC-191,Point machine jammed at KM-150,Mechanical,Safety-Critical,New,0,1,0,0,Extreme,Major,Mechanical,Mechanical failure,High,Critical,1
+TC-192,Switch blades not sealing properly at KM-10,Signal,Important,In Progress,7,0,0,0,High,Major,Signalling,Signal malfunction,Medium,Medium,1
+TC-193,Conductor rail support bracket corroded at S-10,Electrical,Non-Critical,New,2,0,0,0,Extreme,Severe,Electrical,Electrical fault,Critical,Critical,1
+TC-194,Point machine jammed at KM-30,Mechanical,Safety-Critical,Completed,2,3,0,0,Low,Major,Mechanical,Mechanical failure,Medium,Low,1
+TC-195,Coupler knuckle fracture near S-29,Mechanical,Safety-Critical,New,1,2,0,0,Medium,Severe,Mechanical,Mechanical failure,Medium,Low,1
+TC-196,Tunnel lining showing water seepage at S-18,Civil,Operational,Interrupted,2,0,0,0,Medium,Minor,Civil,Structural damage,Low,Low,1
+TC-197,Defective axle counter at station S-07,Civil,Safety-Critical,Reopened,0,0,0,0,High,Minor,Signalling,Switch failure,Critical,Critical,1
+TC-198,Signal near S-19 is flickering intermittently,Signal,Operational,In Progress,0,0,0,0,High,Minor,Signalling,Signal malfunction,High,High,1
+TC-199,Bridge deck spalling concrete near S-18,Civil,Operational,New,30,1,0,0,Extreme,Severe,Civil,Structural damage,High,Critical,1
+TC-200,Catenary dropper broken near KM-90,Electrical,Operational,New,0,2,0,0,Low,Minor,Electrical,Electrical fault,Medium,Low,1

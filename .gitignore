@@ -1,0 +1,71 @@
+# =============================================================================
+# RailMadat — Root .gitignore
+# =============================================================================
+
+# --- Environment Variables (SECRETS) ---
+.env
+.env.local
+.env.*.local
+backend/.env
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+venv/
+.venv/
+env/
+ENV/
+
+# --- Pytest ---
+.pytest_cache/
+
+# --- Logs ---
+*.log
+server.log
+server.pid
+
+# --- Node (if used) ---
+node_modules/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+*.iml
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Build Outputs ---
+dist/
+build/
+
+# --- Temporary ---
+tmp/
+temp/
+*.tmp
+
+# --- Coverage ---
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# --- ML Artifacts (large files, keep in repo or use LFS) ---
+# Uncomment if you want to exclude trained models:
+# ml/**/model_artifacts/*.joblib
+
+# --- Freebuff tooling ---
+.freebuff/

@@ -1,0 +1,6 @@
+asset_id,asset_type,section_id,department,criticality
+SIG-S02-04,Signal,S-02,Signalling,High
+TRK-S01-02,Track,S-01,Track,Medium
+ELE-S03-01,Electrical Equipment,S-03,Electrical,High
+PM-S02-01,Point Machine,S-02,Signalling,Medium
+STM-S01-01,Station Machinery,S-01,Electrical,Low

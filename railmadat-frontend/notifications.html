@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Notifications</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">NOTIFICATIONS</p>
+                    <h1>Notifications</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">System alerts and updates</p>
+                </div>
+
+                <div class="panel" style="max-width:900px">
+                    <div class="panel-header">
+                        <div><h3>Recent Alerts</h3><p>System-generated notifications</p></div>
+                    </div>
+                    <div id="alerts-list" style="padding:8px">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <div class="footer-disclaimer">RailMadat is a decision-support prototype. All AI recommendations require human approval.</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        async function loadAlerts() {
+            var el = document.getElementById('alerts-list');
+            try {
+                var alerts = await apiRequest('/dashboard/alerts');
+                if (alerts && alerts.length > 0) {
+                    var html = '';
+                    alerts.forEach(function(a) {
+                        var severity = (a.severity || 'Medium').toLowerCase();
+                        var sevClass = severity === 'critical' ? 'badge-critical' : severity === 'high' ? 'badge-high' : severity === 'low' ? 'badge-low' : 'badge-blue';
+                        html += '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px 14px;border-bottom:1px solid var(--border-light)">';
+                        html += '<div style="width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:var(--accent-light);flex-shrink:0;font-size:16px">🔔</div>';
+                        html += '<div style="flex:1;min-width:0">';
+                        html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">';
+                        html += '<strong style="color:var(--text-primary);font-size:13px">'+(a.title || a.alert_type || 'Alert')+'</strong>';
+                        html += '<span class="badge '+sevClass+'" style="font-size:9px">'+(a.severity||'')+'</span>';
+                        html += '</div>';
+                        html += '<p style="color:var(--text-secondary);font-size:12px;line-height:1.5;margin:0">'+(a.message || a.description || '')+'</p>';
+                        if (a.created_at) html += '<p style="color:var(--text-tertiary);font-size:10px;margin-top:6px">'+a.created_at.replace('T',' ').slice(0,19)+' IST</p>';
+                        html += '</div></div>';
+                    });
+                    el.innerHTML = html;
+                } else {
+                    el.innerHTML = '<div class="empty-state"><h3>No notifications</h3><p>You\'re all caught up!</p></div>';
+                }
+            } catch(e) {
+                el.innerHTML = '<div class="empty-state"><h3>No notifications yet</h3><p>Alerts will appear here when there are system events.</p></div>';
+            }
+        }
+        loadAlerts();
+    })();
+    </script>
+</body>
+</html>

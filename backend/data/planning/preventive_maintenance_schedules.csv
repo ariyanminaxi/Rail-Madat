@@ -1,0 +1,5 @@
+schedule_id,asset_id,section_id,department,next_due_date,interval_days,assigned_team_id,status
+SCH-001,SIG-S02-04,S-02,Signalling,2026-08-20,90,TEAM-SIG-01,Overdue
+SCH-002,TRK-S01-02,S-01,Track,2026-08-30,60,TEAM-TRK-01,Active
+SCH-003,ELE-S03-01,S-03,Electrical,2026-09-15,120,TEAM-ELE-01,Active
+SCH-004,PM-S02-01,S-02,Signalling,2026-08-22,30,TEAM-SIG-01,Overdue

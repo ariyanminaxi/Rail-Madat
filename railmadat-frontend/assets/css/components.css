@@ -1,0 +1,329 @@
+/* =========================================================
+   components.css — RailMadat Reusable Components
+
+   Badges, tables, cards, forms, buttons, modals, states.
+   ========================================================= */
+
+/* ---- Buttons ---- */
+
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 9px 18px;
+    border-radius: 9px;
+    font-weight: 600; font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: #fff;
+    border: none;
+}
+.btn-primary:hover { filter: brightness(1.1); text-decoration: none; }
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+.btn-secondary:hover { border-color: var(--text-tertiary); }
+
+.btn-danger {
+    background: var(--danger);
+    color: #fff;
+    border: none;
+}
+.btn-danger:hover { filter: brightness(1.1); }
+
+.btn-success {
+    background: var(--success);
+    color: #fff;
+    border: none;
+}
+.btn-success:hover { filter: brightness(1.1); }
+
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.text-btn {
+    background: none; border: none;
+    color: var(--accent-primary);
+    font-size: 12px; font-weight: 600;
+    padding: 4px;
+}
+.text-btn:hover { text-decoration: underline; }
+
+/* ---- Badges ---- */
+
+.badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 700;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.badge-grey { background: var(--badge-grey-bg); color: var(--badge-grey-text); }
+.badge-blue { background: var(--badge-blue-bg); color: var(--badge-blue-text); }
+.badge-orange { background: var(--badge-orange-bg); color: var(--badge-orange-text); }
+.badge-red { background: var(--badge-red-bg); color: var(--badge-red-text); }
+.badge-green { background: var(--badge-green-bg); color: var(--badge-green-text); }
+.badge-purple { background: var(--badge-purple-bg); color: var(--badge-purple-text); }
+.badge-emergency { background: var(--badge-emergency-bg); color: var(--badge-emergency-text); }
+
+/* ---- Cards ---- */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 16px 0 24px;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px;
+    transition: box-shadow 0.2s;
+}
+
+.card:hover { box-shadow: var(--shadow-sm); }
+
+.card-label {
+    display: block;
+    font-size: 12px; color: var(--text-tertiary);
+    margin-bottom: 6px;
+}
+
+.card-value {
+    font-size: 24px; font-weight: 700; color: var(--text-primary);
+}
+
+/* ---- Panel ---- */
+
+.panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.panel-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.panel-header h2, .panel-header h3 { margin: 0; }
+
+/* ---- Table ---- */
+
+.table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+}
+
+.table thead { background: var(--table-header-bg); }
+
+.table th {
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    border-bottom: 1px solid var(--table-border);
+}
+
+.table td {
+    padding: 12px 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+.table tbody tr:hover { background: var(--table-row-hover); }
+.table tbody tr:last-child td { border-bottom: none; }
+
+.table a { color: var(--accent-primary); font-weight: 600; }
+
+/* ---- Form fields ---- */
+
+.field {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 16px;
+}
+
+.field label {
+    font-size: 13px; font-weight: 600; color: var(--text-primary);
+}
+
+.field input, .field select, .field textarea {
+    width: 100%;
+}
+
+.field textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.field-error {
+    color: var(--danger);
+    font-size: 12px;
+}
+
+.form-error, .form-success {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.form-error {
+    background: var(--badge-red-bg);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--badge-red-text);
+}
+
+.form-success {
+    background: var(--badge-green-bg);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: var(--badge-green-text);
+}
+
+/* ---- States: loading, empty, error ---- */
+
+.state {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 8px;
+    padding: 48px 20px;
+    color: var(--text-tertiary);
+}
+
+.state h3 { color: var(--text-primary); margin-top: 4px; }
+.state-icon { font-size: 28px; }
+
+.spinner {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-light);
+    border-top-color: var(--accent-primary);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Modal ---- */
+
+.modal-overlay {
+    position: fixed; inset: 0;
+    background: var(--modal-overlay);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
+}
+
+.modal {
+    background: var(--modal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 26px;
+    max-width: 480px; width: 100%;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal h3 { margin-top: 0; }
+
+.modal-details {
+    margin: 16px 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    padding: 12px 0;
+}
+
+.modal-detail-row {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 4px 0; font-size: 13px;
+}
+
+.modal-detail-row dt { color: var(--text-tertiary); }
+.modal-detail-row dd { margin: 0; color: var(--text-primary); font-weight: 600; }
+
+.modal-actions {
+    display: flex; justify-content: flex-end; gap: 10px;
+    margin-top: 20px;
+}
+
+/* ---- Timeline ---- */
+
+.timeline {
+    list-style: none; margin: 0; padding: 0;
+    border-left: 2px solid var(--border-color);
+    margin-left: 6px;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 0 0 18px 22px;
+    display: flex; align-items: flex-start; gap: 10px;
+}
+
+.timeline-dot {
+    position: absolute; left: -7px; top: 2px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 0 3px var(--bg-primary);
+}
+
+.timeline-item strong { display: block; color: var(--text-primary); }
+.timeline-time { font-size: 12px; color: var(--text-tertiary); }
+
+/* ---- Page header ---- */
+
+.page-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.page-header h1 { margin: 4px 0 0; }
+
+/* ---- Auth guard screen ---- */
+
+.auth-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    padding: 24px;
+}
+
+.auth-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 460px; text-align: center;
+}
+
+/* ---- Responsive table ---- */
+
+@media (max-width: 700px) {
+    .table-scroll { border: none; }
+    .table thead { display: none; }
+    .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
+    .table tr { margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 12px; padding: 8px 4px; }
+    .table td { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border-light); }
+    .table td::before { content: attr(data-label); color: var(--text-tertiary); font-weight: 600; font-size: 12px; }
+}

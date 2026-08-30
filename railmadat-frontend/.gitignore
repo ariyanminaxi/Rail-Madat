@@ -1,0 +1,45 @@
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Dependencies (if any)
+node_modules/
+
+# Build Outputs (if any)
+dist/
+build/
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+
+# IDE
+*.iml
+
+# Misc
+*.bak
+*.backup
+
+# Vercel
+.vercel/

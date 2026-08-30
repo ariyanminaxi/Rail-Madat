@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Contact</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="max-width:800px">
+                    <div style="margin-bottom:24px">
+                        <p class="eyebrow">CONTACT</p>
+                        <h1>Contact Us</h1>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Contact Information</h3></div></div>
+                        <div style="padding:24px;color:var(--text-secondary);font-size:13px;line-height:2">
+                            <p><strong>Email:</strong> support@railmadat.gov.in</p>
+                            <p><strong>Phone:</strong> 1800-XXX-XXXX (Toll Free)</p>
+                            <p><strong>Address:</strong> Ministry of Railways, Rail Madat Division, New Delhi, India</p>
+                            <p><strong>Hours:</strong> Monday - Saturday, 9:00 AM - 6:00 PM IST</p>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-header"><div><h3>Send a Message</h3></div></div>
+                        <div style="padding:24px">
+                            <form style="display:flex;flex-direction:column;gap:16px;max-width:500px" onsubmit="event.preventDefault();alert('Thank you! Your message has been received.')">
+                                <div class="field"><label for="c-name">Name</label><input id="c-name" placeholder="Your name" required></div>
+                                <div class="field"><label for="c-email">Email</label><input id="c-email" type="email" placeholder="your@email.com" required></div>
+                                <div class="field"><label for="c-subject">Subject</label><input id="c-subject" placeholder="How can we help?" required></div>
+                                <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" rows="5" placeholder="Describe your issue or question..." required></textarea></div>
+                                <button type="submit" class="btn-primary" style="align-self:flex-start">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

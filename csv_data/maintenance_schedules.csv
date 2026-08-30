@@ -1,0 +1,21 @@
+schedule_id,asset_id,section_id,department,maintenance_type,activity,interval_days,last_maintenance_date,next_due_date,is_overdue,status,assigned_team_id,created_at
+SCH-301,TRK-S04-01,S-04,Track,Preventive,Track routine inspection,90,2026-07-14,2026-10-12,False,Completed,TEAM-TRK-RESERVE-01,2026-04-20T08:00:00+05:30
+SCH-302,STN-S01-01,S-01,Electrical,Preventive,Station Machinery routine inspection,90,2026-08-17,2026-11-15,False,Upcoming,TEAM-ELE-01,2026-05-20T08:00:00+05:30
+SCH-303,TRK-S02-02,S-02,Track,Preventive,Track routine inspection,90,2026-07-19,2026-10-17,False,Completed,TEAM-TRK-RESERVE-01,2026-04-20T08:00:00+05:30
+SCH-304,ELE-S03-02,S-03,Electrical,Preventive,Electrical Equipment routine inspection,90,2026-05-13,2026-08-11,True,Overdue,TEAM-ELE-01,2026-04-11T08:00:00+05:30
+SCH-305,PM-S04-01,S-04,Signalling,Preventive,Point Machine routine inspection,90,2026-06-19,2026-09-17,False,Completed,TEAM-SIG-RESERVE-01,2026-04-27T08:00:00+05:30
+SCH-306,STN-S04-01,S-04,Electrical,Preventive,Station Machinery routine inspection,90,2026-05-09,2026-08-07,True,Overdue,TEAM-ELE-01,2026-05-20T08:00:00+05:30
+SCH-307,PM-S04-02,S-04,Signalling,Preventive,Point Machine routine inspection,90,2026-07-12,2026-10-10,False,Upcoming,TEAM-SIG-01,2026-05-06T08:00:00+05:30
+SCH-308,ELE-S04-01,S-04,Electrical,Preventive,Electrical Equipment routine inspection,90,2026-05-26,2026-08-24,False,Upcoming,TEAM-ELE-01,2026-04-20T08:00:00+05:30
+SCH-309,TRK-S02-02,S-02,Track,Preventive,Track routine inspection,90,2026-06-12,2026-09-10,False,Upcoming,TEAM-TRK-RESERVE-01,2026-05-03T08:00:00+05:30
+SCH-310,STN-S03-01,S-03,Electrical,Preventive,Station Machinery routine inspection,90,2026-05-21,2026-08-19,True,Overdue,TEAM-ELE-01,2026-05-08T08:00:00+05:30
+SCH-311,PM-S04-02,S-04,Signalling,Preventive,Point Machine routine inspection,90,2026-07-10,2026-10-08,False,Upcoming,TEAM-SIG-01,2026-04-09T08:00:00+05:30
+SCH-312,PM-S01-01,S-01,Signalling,Preventive,Point Machine routine inspection,90,2026-07-25,2026-10-23,False,Upcoming,TEAM-SIG-01,2026-05-13T08:00:00+05:30
+SCH-313,TRK-S02-02,S-02,Track,Preventive,Track routine inspection,90,2026-07-22,2026-10-20,False,Completed,TEAM-TRK-RESERVE-01,2026-04-09T08:00:00+05:30
+SCH-314,STN-S03-01,S-03,Electrical,Preventive,Station Machinery routine inspection,90,2026-06-04,2026-09-02,False,Completed,TEAM-ELE-01,2026-05-19T08:00:00+05:30
+SCH-315,TRK-S03-01,S-03,Track,Preventive,Track routine inspection,90,2026-05-04,2026-08-02,True,Overdue,TEAM-TRK-01,2026-05-07T08:00:00+05:30
+SCH-316,PM-S01-01,S-01,Signalling,Preventive,Point Machine routine inspection,90,2026-07-20,2026-10-18,False,Upcoming,TEAM-SIG-RESERVE-01,2026-05-25T08:00:00+05:30
+SCH-317,ELE-S04-01,S-04,Electrical,Preventive,Electrical Equipment routine inspection,90,2026-05-20,2026-08-18,True,Overdue,TEAM-ELE-01,2026-05-08T08:00:00+05:30
+SCH-318,SIG-S03-01,S-03,Signalling,Preventive,Signal routine inspection,180,2026-08-07,2027-02-03,False,Completed,TEAM-SIG-RESERVE-01,2026-01-11T08:00:00+05:30
+SCH-319,STN-S01-01,S-01,Electrical,Preventive,Station Machinery routine inspection,90,2026-08-02,2026-10-31,False,Completed,TEAM-ELE-01,2026-05-19T08:00:00+05:30
+SCH-320,SIG-S01-01,S-01,Signalling,Preventive,Signal routine inspection,180,2026-08-15,2027-02-11,False,Upcoming,TEAM-SIG-RESERVE-01,2026-01-25T08:00:00+05:30

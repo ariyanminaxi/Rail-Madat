@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadad — Login</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="brand-icon" style="margin:0 auto 16px">R</div>
+                <p class="eyebrow" style="text-align:center">RAILMADAD</p>
+                <h1 style="text-align:center">Railway Maintenance Coordination</h1>
+                <p style="text-align:center">Access is restricted to registered railway officers.<br>Contact an Administrator for account access.</p>
+            </div>
+
+            <form id="login-form" class="login-form" novalidate>
+                <label for="email">Official Email or Employee ID
+                    <input id="email" type="text" autocomplete="username" placeholder="you@railmadat.gov.in" required>
+                </label>
+                <label for="password">Password
+                    <div class="password-field">
+                        <input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" id="toggle-pw">Show</button>
+                    </div>
+                </label>
+                <div id="login-error" class="login-error" style="display:none" role="alert"></div>
+                <button type="submit" class="login-button" id="login-btn">Sign In</button>
+                <button type="button" class="text-button" id="forgot-btn">Forgot password?</button>
+            </form>
+
+            <div class="login-footer">
+                <span>RailMadad is a decision-support prototype using synthetic or authorized data. It does not control live railway infrastructure.</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script>
+    (function() {
+        // Theme toggle for login page
+        var savedTheme = localStorage.getItem('railmadat-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        if (AUTH.isAuthenticated()) { window.location.href = '/dashboard.html'; return; }
+
+        var form = document.getElementById('login-form');
+        var errorEl = document.getElementById('login-error');
+        var btn = document.getElementById('login-btn');
+
+        document.getElementById('toggle-pw').addEventListener('click', function() {
+            var pw = document.getElementById('password');
+            if (pw.type === 'password') { pw.type = 'text'; this.textContent = 'Hide'; }
+            else { pw.type = 'password'; this.textContent = 'Show'; }
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            errorEl.style.display = 'none';
+            btn.disabled = true;
+            btn.textContent = 'Signing in...';
+
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                errorEl.textContent = 'Please enter your email and password.';
+                errorEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+                return;
+            }
+
+            try {
+                var data = await apiRequest('/auth/login', {
+                    method: 'POST',
+                    body: { email: email, password: password }
+                });
+
+                if (data && data.access_token) {
+                    AUTH.setSession(data.access_token, data.role, data.display_name || data.full_name, email);
+                    window.location.href = '/dashboard.html';
+                } else {
+                    throw new Error('Login failed — no token received.');
+                }
+            } catch (err) {
+                errorEl.textContent = err.message || 'Incorrect email or password.';
+                errorEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        });
+
+        document.getElementById('forgot-btn').addEventListener('click', function() {
+            alert('Password reset is handled by your Administrator.');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Inspections</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">INSPECTIONS</p>
+                    <h1>Pending Inspections</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Verify complaints before AI analysis</p>
+                </div>
+
+                <div class="safety-notice" style="max-width:900px">
+                    <div class="safety-notice-icon">⚠</div>
+                    <div>
+                        <strong>Inspector Notice</strong>
+                        <p>Verify complaints before they are forwarded to AI analysis. All verifications are logged for audit purposes.</p>
+                    </div>
+                </div>
+
+                <div class="filters-row" style="max-width:900px;margin-top:20px">
+                    <div class="field">
+                        <label for="filter-section">Section</label>
+                        <select id="filter-section"><option value="">All</option><option>S-01</option><option>S-02</option><option>S-03</option><option>S-04</option></select>
+                    </div>
+                    <div class="field">
+                        <label for="filter-priority">Priority</label>
+                        <select id="filter-priority"><option value="">All</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+                    </div>
+                    <div class="field" style="flex:2">
+                        <label for="filter-search">Search</label>
+                        <input id="filter-search" type="text" placeholder="Search by ID, asset, or description...">
+                    </div>
+                </div>
+
+                <div class="panel" style="max-width:900px">
+                    <table class="data-table">
+                        <thead><tr><th>ID</th><th>Asset Type</th><th>Location</th><th>Priority</th><th>Status</th><th>Date</th></tr></thead>
+                        <tbody id="inspections-tbody"><tr><td colspan="6" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        async function load() {
+            try {
+                var data = await apiRequest('/complaints');
+                var tbody = document.getElementById('inspections-tbody');
+                var pending = (data || []).filter(function(c) {
+                    return c.status === 'Reported' || c.status === 'Under Review';
+                });
+                if (pending.length > 0) {
+                    tbody.innerHTML = pending.map(function(c) {
+                        var pClass = 'badge-medium';
+                        if (c.priority === 'Critical' || c.priority === 'Emergency') pClass = 'badge-critical';
+                        else if (c.priority === 'High') pClass = 'badge-high';
+                        else if (c.priority === 'Low') pClass = 'badge-low';
+                        return '<tr>' +
+                            '<td><a href="complaint-details.html?id=' + c.complaint_id + '" style="color:var(--text-primary);font-weight:600">' + c.complaint_id + '</a></td>' +
+                            '<td>' + (c.asset_type || '') + '</td>' +
+                            '<td>' + (c.city || '') + ', ' + (c.section_id || '') + '</td>' +
+                            '<td><span class="badge ' + pClass + '">' + (c.priority || c.initial_priority || '') + '</span></td>' +
+                            '<td><span class="badge badge-blue">' + (c.status || '') + '</span></td>' +
+                            '<td>' + (c.created_at || '').split('T')[0] + '</td>' +
+                            '</tr>';
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending inspections</td></tr>';
+                }
+            } catch(e) {
+                document.getElementById('inspections-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:40px">Failed to load inspections</td></tr>';
+            }
+        }
+        load();
+
+        document.getElementById('filter-search').addEventListener('input', function() {
+            var q = this.value.toLowerCase();
+            document.querySelectorAll('#inspections-tbody tr').forEach(function(row) {
+                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        });
+    })();
+    </script>
+</body>
+</html>

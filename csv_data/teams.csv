@@ -1,0 +1,6 @@
+team_id,department,home_section_id,qualification,resource_status,current_task_id,available_at,can_be_reassigned,preemption_status,can_be_interrupted,interruption_risk,current_work_stage,temporary_control,is_reserve_team
+TEAM-TRK-01,Track,S-01,Track;Point Machine,Available,,,True,Pre-emptible,True,Low,Not Started,False,False
+TEAM-SIG-01,Signalling,S-02,Signal;Point Machine,Available,,,True,Pre-emptible,True,Low,Not Started,False,False
+TEAM-ELE-01,Electrical,S-03,Electrical Equipment;Station Machinery,Awaiting Resources,,2026-08-21T18:00:00+05:30,True,Pre-emptible,True,Low,Not Started,False,False
+TEAM-TRK-RESERVE-01,Track,S-04,Track;Point Machine,Reserved,,2026-08-23T18:00:00+05:30,True,Pre-emptible,True,Low,Not Started,False,True
+TEAM-SIG-RESERVE-01,Signalling,S-01,Signal;Point Machine,Reserved,,2026-08-21T18:00:00+05:30,True,Pre-emptible,True,Low,Not Started,False,True

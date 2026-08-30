@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RailMadat — Complaint Details</title>
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+    <div class="app">
+        <div id="sidebar-container"></div>
+        <main class="main-content">
+            <div id="topbar-container"></div>
+            <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">COMPLAINT</p>
+                    <h1 id="page-title">Complaint Details</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px" id="page-subtitle">Loading...</p>
+                </div>
+
+                <div id="complaint-content">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        var params = new URLSearchParams(window.location.search);
+        var complaintId = params.get('id') || params.get('complaint_id');
+        if (!complaintId) {
+            document.getElementById('complaint-content').innerHTML = '<div class="empty-state"><h3>No complaint selected</h3><p style="margin-top:8px"><a href="complaints.html">Back to Complaints</a></p></div>';
+            return;
+        }
+
+        document.getElementById('page-title').textContent = 'Complaint ' + complaintId;
+        document.title = 'RailMadat — ' + complaintId;
+
+        async function loadComplaint() {
+            var el = document.getElementById('complaint-content');
+            try {
+                var complaints = await apiRequest('/complaints');
+                var c = null;
+                if (complaints) {
+                    c = complaints.find(function(x) { return x.complaint_id === complaintId; });
+                }
+
+                if (!c) {
+                    el.innerHTML = '<div class="empty-state"><h3>Complaint not found</h3><p style="margin-top:8px"><a href="complaints.html">Back to Complaints</a></p></div>';
+                    return;
+                }
+
+                document.getElementById('page-subtitle').textContent = c.complaint_id + ' — ' + (c.status || 'Unknown');
+
+                var priorityClass = 'badge-medium';
+                if (c.priority === 'Critical' || c.priority === 'Emergency') priorityClass = 'badge-critical';
+                else if (c.priority === 'High') priorityClass = 'badge-high';
+                else if (c.priority === 'Low') priorityClass = 'badge-low';
+
+                var statusClass = 'badge-blue';
+                if (c.status === 'Completed') statusClass = 'badge-green';
+                else if (c.status === 'Rejected') statusClass = 'badge-red';
+
+                var html = '<div style="display:flex;flex-direction:column;gap:20px;max-width:900px">';
+
+                // Complaint Info Card
+                html += '<div class="panel"><div class="panel-header"><div><h3>Complaint Information</h3></div></div>';
+                html += '<div style="padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:20px">';
+                html += '<div class="field"><label>Complaint ID</label><input value="'+c.complaint_id+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Status</label><div style="padding:10px 0"><span class="badge '+statusClass+'">'+(c.status||'')+'</span></div></div>';
+                html += '<div class="field"><label>Priority</label><div style="padding:10px 0"><span class="badge '+priorityClass+'">'+(c.priority||c.initial_priority||'')+'</span></div></div>';
+                html += '<div class="field"><label>Created</label><input value="'+(c.created_at||'').split('T')[0]+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '</div>';
+                html += '<div style="padding:0 24px 24px"><div class="field"><label>Description</label><p style="color:var(--text-secondary);font-size:13px;line-height:1.7">'+(c.description||'No description provided.')+'</p></div>';
+                if (c.rejection_reason) html += '<div class="field" style="margin-top:12px"><label style="color:var(--danger)">Rejection Reason</label><p style="color:var(--badge-red);font-size:13px;line-height:1.7;background:rgba(239,68,68,0.08);padding:10px 14px;border-radius:8px;border:1px solid rgba(239,68,68,0.2)">'+c.rejection_reason+'</p></div>';
+                html += '</div>';
+                html += '</div>';
+
+                // Location & Asset
+                html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">';
+                html += '<div class="panel"><div class="panel-header"><div><h3>Location</h3></div></div><div style="padding:24px">';
+                html += '<div class="field"><label>State</label><input value="'+(c.state||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>City</label><input value="'+(c.city||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Section</label><input value="'+(c.section_id||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '</div></div>';
+
+                html += '<div class="panel"><div class="panel-header"><div><h3>Asset Details</h3></div></div><div style="padding:24px">';
+                html += '<div class="field"><label>Asset Type</label><input value="'+(c.asset_type||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Asset ID</label><input value="'+(c.asset_id||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Criticality</label><input value="'+(c.asset_criticality||c.criticality||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '</div></div>';
+                html += '</div>';
+
+                // AI Classification
+                html += '<div class="panel"><div class="panel-header"><div><h3>AI Classification</h3><p>Automated analysis</p></div></div>';
+                html += '<div style="padding:24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px">';
+                html += '<div class="field"><label>Department</label><input value="'+(c.department||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Fault Category</label><input value="'+(c.fault_category||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Severity</label><input value="'+(c.severity||'')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '<div class="field"><label>Confidence</label><input value="'+(c.confidence_score ? Math.round(c.confidence_score*100)+'%' : '')+'" readonly style="background:var(--bg-hover)"></div>';
+                html += '</div></div>';
+
+                // Timeline
+                html += '<div class="panel"><div class="panel-header"><div><h3>Workflow Timeline</h3><p>Status change history</p></div></div>';
+                html += '<div style="padding:24px" id="timeline"><div class="loading-spinner"></div></div>';
+                html += '</div>';
+
+                html += '</div>';
+                el.innerHTML = html;
+
+                // Load timeline
+                loadTimeline(c.complaint_id);
+
+            } catch(e) {
+                el.innerHTML = '<div class="form-error">Failed to load complaint: ' + e.message + '</div>';
+            }
+        }
+
+        async function loadTimeline(complaintId) {
+            var el = document.getElementById('timeline');
+            try {
+                var data = await apiRequest('/workflow/history?complaint_id=' + complaintId);
+                if (!data || data.length === 0) {
+                    el.innerHTML = '<div style="text-align:center;padding:20px"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="1.5" style="margin-bottom:8px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><p style="color:var(--text-tertiary);font-size:13px;margin-top:8px">No status changes recorded yet.</p><p style="color:var(--text-tertiary);font-size:11px;margin-top:4px">Workflow events will appear here as the complaint progresses.</p></div>';
+                    return;
+                }
+
+                // Status colors
+                var statusColors = {
+                    'Under Review': 'var(--warning, #f59e0b)',
+                    'Assigned': '#3b82f6',
+                    'Waiting for Block': '#8b5cf6',
+                    'Scheduled': '#06b6d4',
+                    'In Progress': '#f97316',
+                    'Completed': 'var(--success, #22c55e)',
+                    'Emergency': 'var(--danger, #ef4444)',
+                    'Reported': 'var(--text-secondary)'
+                };
+
+                var html = '<div style="position:relative;padding-left:24px">';
+                html += '<div style="position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border-color)"></div>';
+
+                data.forEach(function(e, i) {
+                    var prevStatus = (e.previous_status || 'Reported').replace(/_/g, ' ');
+                    var newStatus = (e.new_status || '').replace(/_/g, ' ');
+                    var reason = e.reason || '';
+                    var changedAt = e.changed_at ? e.changed_at.replace('T', ' ').slice(0, 16) + ' IST' : '';
+                    var dotColor = statusColors[newStatus] || 'var(--accent)';
+                    var isLast = i === data.length - 1;
+
+                    html += '<div style="position:relative;padding:10px 0 10px 16px">';
+                    html += '<div style="position:absolute;left:-20px;top:14px;width:12px;height:12px;border-radius:50%;background:' + dotColor + ';border:2px solid var(--bg-primary);z-index:1"></div>';
+                    html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">';
+                    html += '<span style="font-size:12px;color:var(--text-primary);font-weight:600">' + prevStatus + '</span>';
+                    html += '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                    html += '<span style="font-size:12px;color:' + dotColor + ';font-weight:700">' + newStatus + '</span>';
+                    html += '</div>';
+                    if (reason) html += '<p style="font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.5">' + reason + '</p>';
+                    if (changedAt) html += '<p style="font-size:10px;color:var(--text-tertiary);margin-top:2px">' + changedAt + '</p>';
+                    html += '</div>';
+                });
+
+                html += '</div>';
+                el.innerHTML = html;
+            } catch(e) {
+                el.innerHTML = '<p style="color:var(--text-tertiary);font-size:13px">⚠ Timeline unavailable: ' + e.message + '</p>';
+            }
+        }
+
+        loadComplaint();
+    })();
+    </script>
+</body>
+</html>

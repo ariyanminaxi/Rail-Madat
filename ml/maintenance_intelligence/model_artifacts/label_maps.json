@@ -1,0 +1,33 @@
+{
+  "department": {
+    "0": "Civil",
+    "1": "Electrical",
+    "2": "Mechanical",
+    "3": "Signalling",
+    "4": "Telecom",
+    "5": "Track"
+  },
+  "fault_category": {
+    "0": "Ballast issue",
+    "1": "Communication failure",
+    "2": "Electrical fault",
+    "3": "Mechanical failure",
+    "4": "Signal malfunction",
+    "5": "Structural damage",
+    "6": "Switch failure",
+    "7": "Track defect"
+  },
+  "severity": {
+    "0": "Critical",
+    "1": "High",
+    "2": "Low",
+    "3": "Medium"
+  },
+  "base_priority": {
+    "0": "Critical",
+    "1": "Emergency",
+    "2": "High",
+    "3": "Low",
+    "4": "Medium"
+  }
+}

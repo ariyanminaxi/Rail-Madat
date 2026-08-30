@@ -1,0 +1,36 @@
+/* =========================================================
+   login.css — RailMadat Login Page
+   ========================================================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(35, 93, 150, 0.12), transparent 40%),
+        var(--bg-primary);
+    padding: 24px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 38px 34px;
+    box-shadow: var(--shadow-lg);
+}
+
+.login-header h1 {
+    margin: 4px 0 10px;
+    font-size: 22px;
+    letter-spacing: -0.4px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

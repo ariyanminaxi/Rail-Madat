@@ -1,0 +1,21 @@
+{
+  "dataset_name": "railway_maintenance_cases",
+  "dataset_version": "1.0.0",
+  "created_at": "2025-01-15",
+  "source": "Maintenance Data Service",
+  "files": [
+    {
+      "filename": "maintenance_cases.csv",
+      "description": "Main training dataset with complaint text, asset info, workflow status, and verified labels",
+      "rows": 200
+    },
+    {
+      "filename": "workflow_history.csv",
+      "description": "Audit trail of status transitions for each maintenance case"
+    }
+  ],
+  "target_labels": ["department", "fault_category", "severity", "base_priority"],
+  "categorical_features": ["asset_type", "asset_criticality", "current_status", "safety_risk_level", "service_impact_level"],
+  "numeric_features": ["days_overdue", "failure_count_30_days"],
+  "text_features": ["complaint_text"]
+}

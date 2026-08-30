@@ -1,0 +1,27 @@
+asset_id,asset_type,asset_subtype,state,city,section_id,department,asset_criticality,commissioned_date,maintenance_interval_days,last_maintenance_date,next_due_date,current_status,is_overdue
+TRK-S01-01,Track,Ballast Section,Andhra Pradesh,Vijayawada,S-01,Track,Medium,2019-10-10,90,2026-06-22,2026-09-20,Operational,False
+SIG-S02-01,Signal,Axle Counter,Andhra Pradesh,Krishna Canal Junction,S-02,Signalling,Critical,2022-07-30,180,2025-08-06,2026-02-02,Faulty,True
+ELE-S03-01,Electrical Equipment,OHE Section,Andhra Pradesh,Tenali,S-03,Electrical,Medium,2022-11-14,90,2025-10-20,2026-01-18,Operational,True
+PM-S04-01,Point Machine,Electric Point Machine,Andhra Pradesh,Guntur,S-04,Signalling,Medium,2019-12-26,90,2026-08-05,2026-11-03,Operational,False
+STN-S01-01,Station Machinery,Escalator,Andhra Pradesh,Vijayawada,S-01,Electrical,High,2020-01-21,90,2026-03-29,2026-06-27,Operational,True
+TRK-S02-01,Track,Ballast Section,Andhra Pradesh,Krishna Canal Junction,S-02,Track,Low,2021-06-14,90,2026-03-29,2026-06-27,Faulty,True
+SIG-S03-01,Signal,Track Circuit,Andhra Pradesh,Tenali,S-03,Signalling,High,2021-03-24,180,2026-06-30,2026-12-27,Operational,False
+ELE-S04-01,Electrical Equipment,Signal Cable,Andhra Pradesh,Guntur,S-04,Electrical,Low,2018-11-01,90,2026-07-27,2026-10-25,Operational,False
+PM-S01-01,Point Machine,Electric Point Machine,Andhra Pradesh,Vijayawada,S-01,Signalling,High,2021-03-27,90,2026-07-09,2026-10-07,Operational,False
+STN-S02-01,Station Machinery,Escalator,Andhra Pradesh,Krishna Canal Junction,S-02,Electrical,High,2019-05-30,90,2026-07-14,2026-10-12,Operational,False
+TRK-S03-01,Track,Ballast Section,Andhra Pradesh,Tenali,S-03,Track,High,2022-11-29,90,2026-04-21,2026-07-20,Operational,True
+SIG-S04-01,Signal,Colour Light Signal,Andhra Pradesh,Guntur,S-04,Signalling,High,2021-04-24,180,2026-05-27,2026-11-23,Operational,False
+ELE-S01-01,Electrical Equipment,OHE Section,Andhra Pradesh,Vijayawada,S-01,Electrical,Medium,2019-06-04,90,2025-09-03,2025-12-02,Operational,True
+PM-S02-01,Point Machine,Electric Point Machine,Andhra Pradesh,Krishna Canal Junction,S-02,Signalling,Critical,2021-12-26,90,2026-05-27,2026-08-25,Operational,False
+STN-S03-01,Station Machinery,Escalator,Andhra Pradesh,Tenali,S-03,Electrical,Medium,2019-10-09,90,2025-08-31,2025-11-29,Operational,True
+TRK-S04-01,Track,Rail Joint,Andhra Pradesh,Guntur,S-04,Track,Critical,2023-03-07,90,2026-03-10,2026-06-08,Operational,True
+SIG-S01-01,Signal,Track Circuit,Andhra Pradesh,Vijayawada,S-01,Signalling,Critical,2021-08-05,180,2026-05-02,2026-10-29,Operational,False
+ELE-S02-01,Electrical Equipment,OHE Section,Andhra Pradesh,Krishna Canal Junction,S-02,Electrical,Medium,2019-10-03,90,2025-12-27,2026-03-27,Faulty,True
+PM-S03-01,Point Machine,Electric Point Machine,Andhra Pradesh,Tenali,S-03,Signalling,Medium,2020-03-18,90,2025-11-16,2026-02-14,Operational,True
+STN-S04-01,Station Machinery,Escalator,Andhra Pradesh,Guntur,S-04,Electrical,Low,2022-08-01,90,2025-12-01,2026-03-01,Operational,True
+TRK-S01-02,Track,Ballast Section,Andhra Pradesh,Vijayawada,S-01,Track,High,2022-06-18,90,2025-09-04,2025-12-03,Operational,True
+SIG-S02-02,Signal,Colour Light Signal,Andhra Pradesh,Krishna Canal Junction,S-02,Signalling,High,2020-09-25,180,2025-11-21,2026-05-20,Operational,True
+ELE-S03-02,Electrical Equipment,Signal Cable,Andhra Pradesh,Tenali,S-03,Electrical,Medium,2022-09-19,90,2025-09-03,2025-12-02,Operational,True
+PM-S04-02,Point Machine,Electric Point Machine,Andhra Pradesh,Guntur,S-04,Signalling,Critical,2021-09-17,90,2026-01-08,2026-04-08,Faulty,True
+STN-S01-02,Station Machinery,Escalator,Andhra Pradesh,Vijayawada,S-01,Electrical,Medium,2018-06-13,90,2025-08-15,2025-11-13,Operational,True
+TRK-S02-02,Track,Rail Joint,Andhra Pradesh,Krishna Canal Junction,S-02,Track,Low,2022-10-06,90,2025-10-02,2025-12-31,Operational,True
