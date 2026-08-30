@@ -10,7 +10,7 @@
 const _isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 const API_BASE = _isLocal
     ? 'http://localhost:8000/api'
-    : 'https://railmadat-backend.onrender.com/api';
+    : 'https://rail-madat-backend.onrender.com/api';
 
 async function apiRequest(path, { method = 'GET', body, query } = {}) {
     const token = AUTH.getToken();
