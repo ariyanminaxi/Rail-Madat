@@ -99,7 +99,7 @@
                 try {
                     var data = await apiRequest('/complaints');
                     allComplaints = (data || []).filter(function(c) {
-                        return c.status === 'Reported' || c.status === 'Under Review';
+                        return c.status === 'Reported' || c.status === 'Under Review' || c.status === 'Under_Review';
                     });
                     render(allComplaints);
                 } catch(e2) {
