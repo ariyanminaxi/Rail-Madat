@@ -48,4 +48,31 @@ def submit_completion_report(
     new_status = "Completed" if payload.get("work_status") == "Completed" else payload.get("work_status", "Interrupted")
     admin.table("maintenance_tasks").update({"status": new_status}).eq("task_id", task_id).execute()
 
+    # Notifications based on work status
+    try:
+        from app.notifications.alert_helper import (
+            notify_reporter_work_completed,
+            notify_work_interrupted,
+            clear_notifications_for_resource,
+        )
+        complaint_id = task.data[0].get("complaint_id")
+        if complaint_id:
+            comp = admin.table("complaints").select("reporter_user_id").eq("complaint_id", complaint_id).limit(1).execute()
+            reporter_id = comp.data[0].get("reporter_user_id", "") if comp.data else ""
+
+            if new_status == "Completed":
+                # Notify reporter and clear pending notifications
+                if reporter_id:
+                    notify_reporter_work_completed(complaint_id, reporter_id)
+                admin.table("complaints").update({"status": "Completed"}).eq("complaint_id", complaint_id).execute()
+                clear_notifications_for_resource("complaint", complaint_id)
+                clear_notifications_for_resource("task", task_id)
+            else:
+                # Work interrupted - notify managers, re-enter pipeline
+                notify_work_interrupted(task_id, complaint_id, payload.get("failure_reason", "Work interrupted"))
+                admin.table("maintenance_tasks").update({"status": "Waiting for Block"}).eq("task_id", task_id).execute()
+                admin.table("complaints").update({"status": "Under Review"}).eq("complaint_id", complaint_id).execute()
+    except Exception:
+        pass
+
     return {"completion_report_id": report_id, "task_status": new_status}

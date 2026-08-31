@@ -87,6 +87,18 @@ def approve_task(task_id: str, user: CurrentUser = Depends(get_current_user)):
         raise HTTPException(400, f"Task is {task.get('status')}, cannot approve")
     admin.table("maintenance_tasks").update({"status": "Scheduled"}).eq("task_id", task_id).execute()
     _log_audit(user.user_id, user.role, "APPROVE", "task", task_id, "success")
+
+    # Notify reporter that their complaint is being worked on
+    try:
+        from app.notifications.alert_helper import notify_reporter_work_completed
+        complaint_id = task.get("complaint_id")
+        if complaint_id:
+            comp = admin.table("complaints").select("reporter_user_id").eq("complaint_id", complaint_id).limit(1).execute()
+            if comp.data:
+                notify_reporter_work_completed(complaint_id, comp.data[0].get("reporter_user_id", ""))
+    except Exception:
+        pass
+
     return {"task_id": task_id, "status": "Scheduled"}
 
 
@@ -98,6 +110,18 @@ def reject_task(task_id: str, reason: str = "", user: CurrentUser = Depends(get_
         raise HTTPException(404, "Task not found")
     admin.table("maintenance_tasks").update({"status": "Deferred"}).eq("task_id", task_id).execute()
     _log_audit(user.user_id, user.role, "REJECT", "task", task_id, "success")
+
+    # Notify reporter their complaint was deferred
+    try:
+        from app.notifications.alert_helper import notify_reporter_complaint_rejected
+        complaint_id = task.get("complaint_id")
+        if complaint_id:
+            comp = admin.table("complaints").select("reporter_user_id").eq("complaint_id", complaint_id).limit(1).execute()
+            if comp.data:
+                notify_reporter_complaint_rejected(complaint_id, comp.data[0].get("reporter_user_id", ""), "Task deferred by manager")
+    except Exception:
+        pass
+
     return {"task_id": task_id, "status": "Deferred"}
 
 

@@ -127,6 +127,19 @@ def create_complaint(payload: ComplaintCreate, user: CurrentUser = Depends(get_c
         raise HTTPException(status_code=400, detail=f"Failed to create complaint: {str(e)}")
 
     _log_audit(user.user_id, user.role, "CREATE", "complaint", complaint_id, "success")
+
+    # Notify inspectors about new complaint
+    try:
+        from app.notifications.alert_helper import notify_inspectors_new_complaint
+        notify_inspectors_new_complaint(
+            complaint_id=complaint_id,
+            asset_type=payload.asset_type or "Unknown",
+            city=payload.city or "Unknown",
+            priority="Medium",
+        )
+    except Exception:
+        pass
+
     return complaint_data
 
 

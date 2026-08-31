@@ -119,6 +119,17 @@ def verify_complaint(
         # Update complaint status
         admin.table("complaints").update({"status": "Under Review"}).eq("complaint_id", complaint_id).execute()
 
+        # Notify reporter and managers
+        try:
+            from app.notifications.alert_helper import (
+                notify_reporter_complaint_verified,
+                notify_managers_scheduling_needed,
+            )
+            notify_reporter_complaint_verified(complaint_id, comp.get("reporter_user_id", ""))
+            notify_managers_scheduling_needed(complaint_id, task_id, asset_type, priority)
+        except Exception:
+            pass
+
         new_status = "Under Review"
     else:
         # Rejected - complaint is closed, ID is NOT reused
@@ -126,6 +137,14 @@ def verify_complaint(
             "status": "Rejected",
             "priority": "Low",
         }).eq("complaint_id", complaint_id).execute()
+
+        # Notify reporter of rejection
+        try:
+            from app.notifications.alert_helper import notify_reporter_complaint_rejected
+            notify_reporter_complaint_rejected(complaint_id, comp.get("reporter_user_id", ""), notes or "Inspector rejected")
+        except Exception:
+            pass
+
         new_status = "Rejected"
 
     # Audit log
