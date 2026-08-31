@@ -39,16 +39,14 @@ def create_alert(
     """Create a notification in dashboard_alerts table."""
     admin = _get_admin()
     alert = {
-        "alert_id": _gen_alert_id(),
         "user_id": user_id,
         "alert_type": alert_type,
         "title": title,
         "message": message,
         "resource_type": resource_type,
         "resource_id": resource_id,
-        "severity": severity,
+        "priority": severity,
         "is_read": False,
-        "created_at": datetime.now(timezone.utc).isoformat(),
     }
     try:
         result = admin.table("dashboard_alerts").insert(alert).execute()
@@ -183,11 +181,25 @@ def clear_notifications_for_resource(resource_type: str, resource_id: str):
             .eq("resource_id", resource_id)
             .execute()
         )
+        count = 0
+        for row in (result.data or []):
+            admin.table("dashboard_alerts").delete().eq("id", row["id"]).execute()
+            count += 1
+        return count
+    except Exception as e:
+        print(f"[AlertHelper] clear_notifications error: {e}")
+        return 0
+
+
+def clear_all_notifications():
+    """Clear all notifications (for reset)."""
+    admin = _get_admin()
+    try:
+        result = admin.table("dashboard_alerts").select("id").execute()
         for row in (result.data or []):
             admin.table("dashboard_alerts").delete().eq("id", row["id"]).execute()
         return len(result.data or [])
-    except Exception as e:
-        print(f"[AlertHelper] clear_notifications error: {e}")
+    except Exception:
         return 0
 
 

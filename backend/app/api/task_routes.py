@@ -65,7 +65,7 @@ def receive_ai_classification(
         "duration_minutes": 60,
         "due_date": due,
         "block_required": True,
-        "status": "Under Review" if payload.human_review_required else "Waiting for Block",
+        "status": "Under_Review" if payload.human_review_required else "Waiting_for_Block",
     }
     admin.table("maintenance_tasks").insert(task_data).execute()
 
@@ -83,9 +83,13 @@ def approve_task(task_id: str, user: CurrentUser = Depends(get_current_user)):
     if not result.data:
         raise HTTPException(404, "Task not found")
     task = result.data[0]
-    if task.get("status") not in ("Waiting for Block", "Under Review", "Reported"):
+    if task.get("status") not in ("Waiting_for_Block", "Under_Review", "Reported"):
         raise HTTPException(400, f"Task is {task.get('status')}, cannot approve")
     admin.table("maintenance_tasks").update({"status": "Scheduled"}).eq("task_id", task_id).execute()
+    # Also update complaint status
+    complaint_id = task.get("complaint_id")
+    if complaint_id:
+        admin.table("complaints").update({"status": "Scheduled"}).eq("complaint_id", complaint_id).execute()
     _log_audit(user.user_id, user.role, "APPROVE", "task", task_id, "success")
 
     # Notify reporter that their complaint is being worked on
@@ -109,6 +113,10 @@ def reject_task(task_id: str, reason: str = "", user: CurrentUser = Depends(get_
     if not result.data:
         raise HTTPException(404, "Task not found")
     admin.table("maintenance_tasks").update({"status": "Deferred"}).eq("task_id", task_id).execute()
+    # Also update complaint status
+    complaint_id = task.get("complaint_id")
+    if complaint_id:
+        admin.table("complaints").update({"status": "Deferred"}).eq("complaint_id", complaint_id).execute()
     _log_audit(user.user_id, user.role, "REJECT", "task", task_id, "success")
 
     # Notify reporter their complaint was deferred

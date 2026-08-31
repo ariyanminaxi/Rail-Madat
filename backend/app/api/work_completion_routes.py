@@ -70,8 +70,8 @@ def submit_completion_report(
             else:
                 # Work interrupted - notify managers, re-enter pipeline
                 notify_work_interrupted(task_id, complaint_id, payload.get("failure_reason", "Work interrupted"))
-                admin.table("maintenance_tasks").update({"status": "Waiting for Block"}).eq("task_id", task_id).execute()
-                admin.table("complaints").update({"status": "Under Review"}).eq("complaint_id", complaint_id).execute()
+                admin.table("maintenance_tasks").update({"status": "Waiting_for_Block"}).eq("task_id", task_id).execute()
+                admin.table("complaints").update({"status": "Under_Review"}).eq("complaint_id", complaint_id).execute()
     except Exception:
         pass
 

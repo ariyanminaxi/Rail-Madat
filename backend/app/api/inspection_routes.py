@@ -113,11 +113,11 @@ def verify_complaint(
             "duration_minutes": 60,
             "due_date": due,
             "block_required": True,
-            "status": "Waiting for Block",
+            "status": "Waiting_for_Block",
         }).execute()
 
         # Update complaint status
-        admin.table("complaints").update({"status": "Under Review"}).eq("complaint_id", complaint_id).execute()
+        admin.table("complaints").update({"status": "Under_Review"}).eq("complaint_id", complaint_id).execute()
 
         # Notify reporter and managers
         try:
@@ -130,7 +130,7 @@ def verify_complaint(
         except Exception:
             pass
 
-        new_status = "Under Review"
+        new_status = "Under_Review"
     else:
         # Rejected - complaint is closed, ID is NOT reused
         admin.table("complaints").update({
