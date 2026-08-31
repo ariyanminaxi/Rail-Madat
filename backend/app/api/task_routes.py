@@ -48,23 +48,13 @@ def receive_ai_classification(
 
     # Create task
     task_id = _gen_id("T")
-    due = (datetime.now(timezone.utc) + timedelta(days=2)).isoformat()
     task_data = {
         "task_id": task_id,
-        "source_type": "complaint",
-        "source_id": payload.complaint_id,
         "complaint_id": payload.complaint_id,
         "asset_id": complaint.data[0].get("asset_id", ""),
-        "asset_type": payload.asset_type,
         "section_id": complaint.data[0].get("section_id", ""),
         "department": payload.department,
-        "fault_category": payload.fault_category,
-        "maintenance_type": "Corrective",
-        "base_priority": payload.base_priority,
-        "final_priority": payload.base_priority,
-        "duration_minutes": 60,
-        "due_date": due,
-        "block_required": True,
+        "priority": payload.base_priority,
         "status": "Under_Review" if payload.human_review_required else "Waiting_for_Block",
     }
     admin.table("maintenance_tasks").insert(task_data).execute()

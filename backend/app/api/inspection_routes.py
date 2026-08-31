@@ -80,39 +80,26 @@ def verify_complaint(
         priority = comp.get("priority", "Medium")
 
         # Create AI classification record
-        ai_id = f"AI-{uuid.uuid4().int % 900 + 100}"
         admin.table("ai_classifications").insert({
-            "classification_id": ai_id,
             "complaint_id": complaint_id,
             "department": department,
             "fault_category": fault_category,
             "severity": "High" if priority == "Critical" else "Medium",
             "base_priority": priority,
             "confidence": 0.85,
-            "human_review_required": False,
+            "requires_human_review": False,
         }).execute()
 
         # Create maintenance task (enters the main pipeline)
         import uuid as _uuid
-        from datetime import datetime, timedelta, timezone
         task_id = f"T-{_uuid.uuid4().int % 900 + 100}"
-        due = (datetime.now(timezone.utc) + timedelta(days=2)).isoformat()
         admin.table("maintenance_tasks").insert({
             "task_id": task_id,
-            "source_type": "complaint",
-            "source_id": complaint_id,
             "complaint_id": complaint_id,
             "asset_id": comp.get("asset_id", ""),
-            "asset_type": asset_type,
             "section_id": section_id,
             "department": department,
-            "fault_category": fault_category,
-            "maintenance_type": "Corrective",
-            "base_priority": priority,
-            "final_priority": priority,
-            "duration_minutes": 60,
-            "due_date": due,
-            "block_required": True,
+            "priority": priority,
             "status": "Waiting_for_Block",
         }).execute()
 
