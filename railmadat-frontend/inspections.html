@@ -158,16 +158,16 @@
             try {
                 var result = await apiRequest('/inspections/verify', {
                     method: 'POST',
-                    body: JSON.stringify({
+                    body: {
                         complaint_id: complaintId,
                         decision: 'verified',
                         notes: 'Inspector verified - forwarding to AI classification'
-                    })
+                    }
                 });
                 alert('Complaint ' + complaintId + ' verified and sent to AI analysis!');
-                load(); // Refresh list
+                load();
             } catch(e) {
-                alert('Error: ' + e.message);
+                alert('Error: ' + (e.message || e));
             }
         };
 
@@ -194,17 +194,17 @@
             try {
                 var result = await apiRequest('/inspections/verify', {
                     method: 'POST',
-                    body: JSON.stringify({
+                    body: {
                         complaint_id: complaintId,
                         decision: 'rejected',
                         notes: reason + (notes ? ' - ' + notes : '')
-                    })
+                    }
                 });
                 alert('Complaint ' + complaintId + ' rejected.');
                 closeRejectModal();
-                load(); // Refresh list
+                load();
             } catch(e) {
-                alert('Error: ' + e.message);
+                alert('Error: ' + (e.message || e));
             }
         };
 
