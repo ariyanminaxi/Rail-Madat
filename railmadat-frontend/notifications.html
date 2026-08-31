@@ -28,7 +28,7 @@
                     </div>
                 </div>
 
-                <div class="footer-disclaimer">RailMadat is a decision-support prototype. All AI recommendations require human approval.</div>
+                <div class="footer-disclaimer">RailMadat is a decision-support system. All AI recommendations require human approval.</div>
             </div>
         </main>
     </div>
@@ -40,6 +40,17 @@
     (function() {
         if (!AUTH.requireAuth()) return;
 
+        function getAlertLink(a) {
+            var type = (a.alert_type || a.title || '').toLowerCase();
+            if (type.includes('block') || type.includes('approval') || type.includes('bundle')) return 'pending-approvals.html';
+            if (type.includes('complaint') || type.includes('fault') || type.includes('defect') || type.includes('reported')) return 'complaints.html';
+            if (type.includes('overdue') || type.includes('maintenance') || type.includes('asset')) return 'maintenance-schedule.html';
+            if (type.includes('task')) return 'assigned-tasks.html';
+            if (type.includes('team') || type.includes('assignment')) return 'team-management.html';
+            if (type.includes('inspection')) return 'inspections.html';
+            return null;
+        }
+
         async function loadAlerts() {
             var el = document.getElementById('alerts-list');
             try {
@@ -49,16 +60,23 @@
                     alerts.forEach(function(a) {
                         var severity = (a.severity || 'Medium').toLowerCase();
                         var sevClass = severity === 'critical' ? 'badge-critical' : severity === 'high' ? 'badge-high' : severity === 'low' ? 'badge-low' : 'badge-blue';
-                        html += '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px 14px;border-bottom:1px solid var(--border-light)">';
-                        html += '<div style="width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:var(--accent-light);flex-shrink:0;font-size:16px">🔔</div>';
+                        var link = getAlertLink(a);
+                        var wrapTag = link ? '<a href="' + link + '" style="display:flex;align-items:flex-start;gap:14px;padding:16px 14px;border-bottom:1px solid var(--border-light);text-decoration:none;color:inherit;cursor:pointer;border-radius:8px;transition:background 0.15s" onmouseover="this.style.background=\"var(--bg-hover)\"" onmouseout="this.style.background=\"transparent\"">' : '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px 14px;border-bottom:1px solid var(--border-light)">';
+                        var closeTag = link ? '</a>' : '</div>';
+                        var icon = '🔔';
+                        if (severity === 'critical') icon = '🚨';
+                        else if (severity === 'high') icon = '⚠️';
+                        html += wrapTag;
+                        html += '<div style="width:36px;height:36px;display:grid;place-items:center;border-radius:8px;background:var(--accent-light);flex-shrink:0;font-size:16px">' + icon + '</div>';
                         html += '<div style="flex:1;min-width:0">';
                         html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">';
                         html += '<strong style="color:var(--text-primary);font-size:13px">'+(a.title || a.alert_type || 'Alert')+'</strong>';
                         html += '<span class="badge '+sevClass+'" style="font-size:9px">'+(a.severity||'')+'</span>';
+                        if (link) html += '<span style="color:var(--accent);font-size:10px;margin-left:auto">→ View</span>';
                         html += '</div>';
                         html += '<p style="color:var(--text-secondary);font-size:12px;line-height:1.5;margin:0">'+(a.message || a.description || '')+'</p>';
                         if (a.created_at) html += '<p style="color:var(--text-tertiary);font-size:10px;margin-top:6px">'+a.created_at.replace('T',' ').slice(0,19)+' IST</p>';
-                        html += '</div></div>';
+                        html += '</div>' + closeTag;
                     });
                     el.innerHTML = html;
                 } else {

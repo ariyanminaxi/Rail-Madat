@@ -17,7 +17,16 @@
             justify-content: center;
             text-align: center;
             padding: 40px 20px;
-            background: radial-gradient(circle at 50% 20%, rgba(0,86,150,0.1), transparent 50%), var(--bg-primary);
+            background: radial-gradient(circle at 50% 20%, rgba(0,86,150,0.15), transparent 50%), var(--bg-primary);
+        }
+        .hero-features .icon {
+            width: 48px; height: 48px;
+            display: grid; place-items: center;
+            border-radius: 12px;
+            margin: 0 auto 10px;
+            font-size: 22px;
+            background: var(--accent-light);
+            color: var(--accent);
         }
         .hero h1 { font-size: 36px; margin-bottom: 12px; }
         .hero p { color: var(--text-tertiary); font-size: 16px; max-width: 500px; line-height: 1.7; margin-bottom: 30px; }
@@ -43,20 +52,19 @@
         <div class="brand-icon" style="width:56px;height:56px;font-size:24px;margin-bottom:20px">R</div>
         <h1>RailMadat</h1>
         <p>Railway Maintenance Coordination and Decision-Support System. AI-powered fault classification with human-in-the-loop approval.</p>
-        <a href="login.html" class="btn btn-primary" style="padding:12px 32px;font-size:15px">Sign In</a>
-        <div class="hero-features">
+        <a href="login.html" class="btn btn-primary" style="padding:12px 32px;font-size:15px">Sign In</a>            <div class="hero-features">
             <div class="hero-feature">
-                <div class="icon">\u26A0</div>
+                <div class="icon">⚠</div>
                 <h3>Report Faults</h3>
                 <p>Officers report maintenance issues with location and asset details</p>
             </div>
             <div class="hero-feature">
-                <div class="icon">\u2699</div>
+                <div class="icon">⚙</div>
                 <h3>AI Classification</h3>
                 <p>Automated fault categorization and priority assignment</p>
             </div>
             <div class="hero-feature">
-                <div class="icon">\u2713</div>
+                <div class="icon">✓</div>
                 <h3>Scheduled Maintenance</h3>
                 <p>Conflict-free block scheduling with manager approval</p>
             </div>

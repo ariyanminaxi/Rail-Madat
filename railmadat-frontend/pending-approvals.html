@@ -25,8 +25,51 @@
     </div>
     <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
     <script>
-    (function(){if(!AUTH.requireAuth())return;
-        document.getElementById('blocks-tbody').innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals</td></tr>';
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        async function loadApprovals() {
+            var tbody = document.getElementById('blocks-tbody');
+            try {
+                var tasks = await apiRequest('/tasks');
+                var pending = (tasks || []).filter(function(t) {
+                    return t.status === 'Waiting for Block' || t.status === 'Scheduled' || t.status === 'Reported' || t.status === 'Under Review';
+                });
+                if (pending.length > 0) {
+                    tbody.innerHTML = pending.map(function(t) {
+                        var sClass = 'badge-orange';
+                        if (t.status === 'Waiting for Block') sClass = 'badge-high';
+                        if (t.priority === 'Critical') sClass = 'badge-critical';
+                        return '<tr>' +
+                            '<td><strong style="color:var(--text-primary)>' + (t.task_id || '') + '</strong></td>' +
+                            '<td>' + (t.asset_id || '') + '</td>' +
+                            '<td>' + (t.section_id || t.department || '') + '</td>' +
+                            '<td>' + (t.scheduled_date || t.next_due_date || '—') + '</td>' +
+                            '<td>' + (t.assigned_team_id || 'Unassigned') + '</td>' +
+                            '<td><span class="badge ' + sClass + '">' + (t.status || '') + '</span></td>' +
+                            '<td>' + (t.status === 'Waiting for Block' ? '<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick=\"approveTask(\'' + t.task_id + '\')\">Approve</button> <button class="btn-secondary" style="font-size:11px;padding:6px 10px" onclick=\"rejectTask(\'' + t.task_id + '\')\">Reject</button>' : '<span style="color:var(--text-tertiary)">—</span>') + '</td>' +
+                            '</tr>';
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals — all tasks are processed</td></tr>';
+                }
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals</td></tr>';
+            }
+        }
+        window.approveTask = async function(taskId) {
+            try {
+                await apiRequest('/tasks/' + taskId + '/start', { method: 'POST' });
+                loadApprovals();
+            } catch(e) { alert('Failed: ' + e.message); }
+        };
+        window.rejectTask = async function(taskId) {
+            try {
+                await apiRequest('/tasks/' + taskId + '/complete', { method: 'POST', body: { status: 'Deferred', resolution_type: 'Rejected' } });
+                loadApprovals();
+            } catch(e) { alert('Failed: ' + e.message); }
+        };
+        loadApprovals();
     })();
     </script>
 </body>

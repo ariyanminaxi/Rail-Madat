@@ -56,7 +56,7 @@
                     <div class="safety-notice-icon">⚠</div>
                     <div>
                         <strong>Safety Disclaimer</strong>
-                        <p>RailMadad is a decision-support prototype using synthetic data. It does not control live railway infrastructure. All AI recommendations require human approval before implementation.</p>
+                        <p>RailMadat is a decision-support system using synthetic data for demonstration. All AI recommendations require human approval before implementation.</p>
                     </div>
                 </div>
             </div>
@@ -137,18 +137,64 @@
                 }
             } catch(e) { document.getElementById('tasks-tbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-tertiary)">Failed to load tasks</td></tr>'; }
 
-            // Alerts
+            // Alerts + AI Classification
             try {
                 var alerts = await apiRequest('/dashboard/alerts');
-                if (alerts && alerts.length > 0) {
-                    var countEl = document.getElementById('notif-count');
-                    if (countEl) { countEl.textContent = alerts.length; countEl.style.display = 'grid'; }
-                    var aiStats = document.getElementById('ai-stats');
-                    aiStats.innerHTML = '<p style="color:var(--text-tertiary);font-size:12px;margin-bottom:12px">'+alerts.length+' active alerts</p>';
-                    alerts.slice(0,3).forEach(function(a) {
-                        aiStats.innerHTML += '<div style="padding:8px 0;border-bottom:1px solid var(--border-light);font-size:12px;color:var(--text-secondary)">'+(a.title||a.message||'')+'</div>';
+                var countEl = document.getElementById('notif-count');
+                var aiStats = document.getElementById('ai-stats');
+                var alertCount = (alerts || []).length;
+                if (countEl) { countEl.textContent = alertCount; countEl.style.display = alertCount > 0 ? 'grid' : 'none'; }
+
+                // Category breakdown from complaints
+                var complaints = await apiRequest('/complaints');
+                var categories = {};
+                var severities = {Critical:0, High:0, Medium:0, Low:0};
+                (complaints || []).forEach(function(c) {
+                    var cat = c.fault_category || c.asset_type || 'Unknown';
+                    categories[cat] = (categories[cat] || 0) + 1;
+                    if (c.priority && severities[c.priority] !== undefined) severities[c.priority]++;
+                });
+
+                var html = '<div style="margin-bottom:14px">';
+                html += '<p style="color:var(--text-tertiary);font-size:11px;margin-bottom:8px">'+alertCount+' active alerts · '+((complaints||[]).length)+' classified complaints</p>';
+                html += '</div>';
+
+                // Severity distribution
+                html += '<div style="margin-bottom:14px">';
+                html += '<p style="color:var(--text-tertiary);font-size:10px;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Severity Distribution</p>';
+                html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+                if (severities.Critical > 0) html += '<span class="badge badge-critical">'+severities.Critical+' Critical</span>';
+                if (severities.High > 0) html += '<span class="badge badge-high">'+severities.High+' High</span>';
+                if (severities.Medium > 0) html += '<span class="badge badge-medium">'+severities.Medium+' Medium</span>';
+                if (severities.Low > 0) html += '<span class="badge badge-low">'+severities.Low+' Low</span>';
+                html += '</div></div>';
+
+                // Fault categories
+                var catEntries = Object.entries(categories).sort(function(a,b){return b[1]-a[1];});
+                if (catEntries.length > 0) {
+                    html += '<div style="margin-bottom:14px">';
+                    html += '<p style="color:var(--text-tertiary);font-size:10px;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Top Fault Categories</p>';
+                    catEntries.slice(0,4).forEach(function(e) {
+                        var pct = Math.round((e[1] / (complaints||[]).length) * 100);
+                        html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border-light);font-size:12px">';
+                        html += '<span style="color:var(--text-secondary)">'+e[0]+'</span>';
+                        html += '<span style="color:var(--text-primary);font-weight:600">'+e[1]+' <span style="color:var(--text-tertiary);font-weight:400;font-size:10px">('+pct+'%)</span></span>';
+                        html += '</div>';
                     });
+                    html += '</div>';
                 }
+
+                // Recent alerts
+                if (alertCount > 0) {
+                    html += '<div>';
+                    html += '<p style="color:var(--text-tertiary);font-size:10px;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px">Recent Alerts</p>';
+                    alerts.slice(0,3).forEach(function(a) {
+                        html += '<div style="padding:7px 0;border-bottom:1px solid var(--border-light);font-size:11px;color:var(--text-secondary)">'+(a.title||a.message||'')+'</div>';
+                    });
+                    html += '</div>';
+                }
+
+                aiStats.innerHTML = html;
             } catch(e) {}
         }
 

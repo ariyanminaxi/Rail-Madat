@@ -17,11 +17,57 @@
                     <strong style="color:var(--accent);font-size:12px">ℹ Bundle Approvals</strong>
                     <p style="color:var(--text-tertiary);font-size:11px;margin-top:4px">Bundles combine multiple maintenance tasks into a single time block for efficiency.</p>
                 </div>
-                <div id="bundles-container"><p style="text-align:center;color:var(--text-tertiary);padding:40px">No bundles pending approval</p></div>
+                <div class="panel" style="max-width:1000px">
+                    <div class="panel-header"><div><h3>Maintenance Bundles</h3><p>Tasks grouped into time blocks for approval</p></div></div>
+                    <table class="data-table">
+                        <thead><tr><th>Block ID</th><th>Section</th><th>Department</th><th>Start</th><th>End</th><th>Tasks</th><th>Status</th><th>Action</th></tr></thead>
+                        <tbody id="bundles-tbody"><tr><td colspan="8" class="loading-spinner" style="border:none"></td></tr></tbody>
+                    </table>
+                </div>
+                <div class="footer-disclaimer">RailMadat is a decision-support system. All scheduling decisions require manager approval.</div>
             </div>
         </main>
     </div>
     <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
-    <script>if(!AUTH.requireAuth()){};</script>
+    <script>
+    (function() {
+        if (!AUTH.requireAuth()) return;
+
+        async function loadBundles() {
+            var tbody = document.getElementById('bundles-tbody');
+            try {
+                var blocks = await apiRequest('/scheduling/blocks');
+                if (blocks && blocks.length > 0) {
+                    tbody.innerHTML = blocks.map(function(b) {
+                        var sClass = b.status === 'Approved' ? 'badge-green' : b.status === 'Rejected' ? 'badge-red' : 'badge-orange';
+                        return '<tr>' +
+                            '<td><strong style="color:var(--text-primary)>' + (b.block_id || b.scheduling_block_id || '') + '</strong></td>' +
+                            '<td>' + (b.section_id || '') + '</td>' +
+                            '<td>' + (b.department || '') + '</td>' +
+                            '<td>' + (b.start_time || b.start_window || '') + '</td>' +
+                            '<td>' + (b.end_time || b.end_window || '') + '</td>' +
+                            '<td>' + (b.task_count || (b.task_ids ? b.task_ids.length : 0) || 0) + '</td>' +
+                            '<td><span class="badge ' + sClass + '">' + (b.status || 'Pending') + '</span></td>' +
+                            '<td>' + (b.status === 'Pending' || b.status === 'Awaiting Approval' ? '<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick=\"approveBlock(\'' + (b.block_id || b.scheduling_block_id) + '\')\">Approve</button>' : '—') + '</td>' +
+                            '</tr>';
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No maintenance bundles found</td></tr>';
+                }
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No bundles pending approval</td></tr>';
+            }
+        }
+        window.approveBlock = async function(blockId) {
+            try {
+                await apiRequest('/scheduling/blocks/' + blockId + '/approve', { method: 'POST' });
+                loadBundles();
+            } catch(e) {
+                alert('Failed to approve: ' + e.message);
+            }
+        };
+        loadBundles();
+    })();
+    </script>
 </body>
 </html>

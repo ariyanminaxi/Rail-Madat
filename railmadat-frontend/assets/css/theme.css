@@ -53,8 +53,8 @@
 [data-theme="dark"] {
     --bg-primary: #0a0f17;
     --bg-secondary: #101822;
-    --bg-card: #101720;
-    --bg-input: #0d141e;
+    --bg-card: #111c28;
+    --bg-input: #1a2536;
     --bg-hover: #141e2b;
     --bg-active: #1a2d42;
     --text-primary: #e8edf5;
@@ -388,14 +388,14 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
     width: 100%; max-width: 420px;
     background: var(--bg-card); border: 1px solid var(--border-color);
     border-radius: 18px; padding: 38px 34px;
-    box-shadow: 0 24px 70px rgba(0,0,0,0.3);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
 }
 .login-header h1 { margin: 4px 0 10px; font-size: 22px; color: var(--text-primary); }
 .login-header p { margin: 0 0 26px; color: var(--text-secondary); font-size: 13px; line-height: 1.6; }
 .login-form { display: flex; flex-direction: column; gap: 16px; }
 .login-form label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .login-form input { background: var(--bg-input); border: 1px solid var(--border-color); border-radius: 9px; padding: 11px 13px; color: var(--text-primary); font: inherit; width: 100%; }
-.login-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.login-form input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-light); }
 .password-field { position: relative; display: flex; }
 .password-field input { padding-right: 58px; }
 .password-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: transparent; border: none; color: var(--accent); font-size: 12px; font-weight: 700; padding: 6px 8px; }
