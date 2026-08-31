@@ -16,18 +16,18 @@
                 <div style="margin-bottom:24px">
                     <p class="eyebrow">INSPECTIONS</p>
                     <h1>Pending Inspections</h1>
-                    <p style="color:var(--text-tertiary);margin-top:4px">Verify complaints before AI analysis</p>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Verify complaints before AI analysis and maintenance pipeline</p>
                 </div>
 
-                <div class="safety-notice" style="max-width:900px">
+                <div class="safety-notice" style="max-width:1000px">
                     <div class="safety-notice-icon">⚠</div>
                     <div>
                         <strong>Inspector Notice</strong>
-                        <p>Verify complaints before they are forwarded to AI analysis. All verifications are logged for audit purposes.</p>
+                        <p>Verify or reject complaints before they enter the AI classification pipeline. Verified complaints are forwarded to AI analysis. Rejected complaints are closed with a reason. All actions are logged for audit.</p>
                     </div>
                 </div>
 
-                <div class="filters-row" style="max-width:900px;margin-top:20px">
+                <div class="filters-row" style="max-width:1000px;margin-top:20px">
                     <div class="field">
                         <label for="filter-section">Section</label>
                         <select id="filter-section"><option value="">All</option><option>S-01</option><option>S-02</option><option>S-03</option><option>S-04</option></select>
@@ -42,14 +42,42 @@
                     </div>
                 </div>
 
-                <div class="panel" style="max-width:900px">
+                <div class="panel" style="max-width:1000px">
                     <table class="data-table">
-                        <thead><tr><th>ID</th><th>Asset Type</th><th>Location</th><th>Priority</th><th>Status</th><th>Date</th></tr></thead>
-                        <tbody id="inspections-tbody"><tr><td colspan="6" class="loading-spinner" style="border:none"></td></tr></tbody>
+                        <thead><tr><th>ID</th><th>Asset Type</th><th>Asset ID</th><th>Location</th><th>Priority</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+                        <tbody id="inspections-tbody"><tr><td colspan="8" class="loading-spinner" style="border:none"></td></tr></tbody>
                     </table>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Reject Modal -->
+    <div id="reject-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;max-width:480px;width:90%">
+            <h3 style="margin:0 0 8px;color:var(--text-primary)">Reject Complaint</h3>
+            <p style="color:var(--text-tertiary);margin:0 0 16px;font-size:13px">Provide a reason for rejection. This complaint will not enter the maintenance pipeline.</p>
+            <input type="hidden" id="reject-complaint-id">
+            <div class="field" style="margin-bottom:16px">
+                <label for="reject-reason">Reason for Rejection</label>
+                <select id="reject-reason" style="width:100%">
+                    <option value="">Select a reason...</option>
+                    <option value="Not a valid maintenance issue">Not a valid maintenance issue</option>
+                    <option value="Duplicate complaint">Duplicate complaint</option>
+                    <option value="Insufficient information">Insufficient information</option>
+                    <option value="Already being addressed">Already being addressed</option>
+                    <option value="Out of scope">Out of scope</option>
+                </select>
+            </div>
+            <div class="field" style="margin-bottom:16px">
+                <label for="reject-notes">Additional Notes (optional)</label>
+                <textarea id="reject-notes" rows="3" style="width:100%;background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:8px;color:var(--text-primary);resize:vertical" placeholder="Any additional details..."></textarea>
+            </div>
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+                <button onclick="closeRejectModal()" class="btn-secondary" style="padding:8px 16px">Cancel</button>
+                <button onclick="confirmReject()" class="btn-danger" style="padding:8px 16px;background:var(--danger);color:white;border:none;border-radius:6px;cursor:pointer">Reject Complaint</button>
+            </div>
+        </div>
     </div>
 
     <script src="assets/js/auth.js"></script>
@@ -59,43 +87,131 @@
     (function() {
         if (!AUTH.requireAuth()) return;
 
+        var allComplaints = [];
+
         async function load() {
             try {
-                var data = await apiRequest('/complaints');
-                var tbody = document.getElementById('inspections-tbody');
-                var pending = (data || []).filter(function(c) {
-                    return c.status === 'Reported' || c.status === 'Under Review';
-                });
-                if (pending.length > 0) {
-                    tbody.innerHTML = pending.map(function(c) {
-                        var pClass = 'badge-medium';
-                        if (c.priority === 'Critical' || c.priority === 'Emergency') pClass = 'badge-critical';
-                        else if (c.priority === 'High') pClass = 'badge-high';
-                        else if (c.priority === 'Low') pClass = 'badge-low';
-                        return '<tr>' +
-                            '<td><a href="complaint-details.html?id=' + c.complaint_id + '" style="color:var(--text-primary);font-weight:600">' + c.complaint_id + '</a></td>' +
-                            '<td>' + (c.asset_type || '') + '</td>' +
-                            '<td>' + (c.city || '') + ', ' + (c.section_id || '') + '</td>' +
-                            '<td><span class="badge ' + pClass + '">' + (c.priority || c.initial_priority || '') + '</span></td>' +
-                            '<td><span class="badge badge-blue">' + (c.status || '') + '</span></td>' +
-                            '<td>' + (c.created_at || '').split('T')[0] + '</td>' +
-                            '</tr>';
-                    }).join('');
-                } else {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending inspections</td></tr>';
-                }
+                var data = await apiRequest('/inspections/pending');
+                allComplaints = data || [];
+                render(allComplaints);
             } catch(e) {
-                document.getElementById('inspections-tbody').innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--danger);padding:40px">Failed to load inspections</td></tr>';
+                // Fallback: try /complaints endpoint
+                try {
+                    var data = await apiRequest('/complaints');
+                    allComplaints = (data || []).filter(function(c) {
+                        return c.status === 'Reported' || c.status === 'Under Review';
+                    });
+                    render(allComplaints);
+                } catch(e2) {
+                    document.getElementById('inspections-tbody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--danger);padding:40px">Failed to load inspections: ' + e2.message + '</td></tr>';
+                }
             }
         }
-        load();
 
-        document.getElementById('filter-search').addEventListener('input', function() {
-            var q = this.value.toLowerCase();
-            document.querySelectorAll('#inspections-tbody tr').forEach(function(row) {
-                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+        function render(list) {
+            var tbody = document.getElementById('inspections-tbody');
+            if (list.length > 0) {
+                tbody.innerHTML = list.map(function(c) {
+                    var pClass = 'badge-medium';
+                    if (c.priority === 'Critical' || c.priority === 'Emergency') pClass = 'badge-critical';
+                    else if (c.priority === 'High') pClass = 'badge-high';
+                    else if (c.priority === 'Low') pClass = 'badge-low';
+                    var date = (c.created_at || '').split('T')[0];
+                    return '<tr data-id="' + c.complaint_id + '">' +
+                        '<td><a href="complaint-details.html?id=' + c.complaint_id + '" style="color:var(--text-primary);font-weight:600">' + c.complaint_id + '</a></td>' +
+                        '<td>' + (c.asset_type || '') + '</td>' +
+                        '<td>' + (c.asset_id || '-') + '</td>' +
+                        '<td>' + (c.city || '') + ', ' + (c.section_id || '') + '</td>' +
+                        '<td><span class="badge ' + pClass + '">' + (c.priority || 'Medium') + '</span></td>' +
+                        '<td><span class="badge badge-blue">' + (c.status || '') + '</span></td>' +
+                        '<td>' + date + '</td>' +
+                        '<td style="white-space:nowrap">' +
+                            '<button onclick="verifyComplaint(\'' + c.complaint_id + '\')" style="background:var(--success,#22c55e);color:white;border:none;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:11px;margin-right:4px">✓ Verify</button>' +
+                            '<button onclick="openRejectModal(\'' + c.complaint_id + '\')" style="background:var(--danger,#ef4444);color:white;border:none;border-radius:4px;padding:5px 10px;cursor:pointer;font-size:11px">✗ Reject</button>' +
+                        '</td>' +
+                        '</tr>';
+                }).join('');
+            } else {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending inspections</td></tr>';
+            }
+        }
+
+        function applyFilters() {
+            var section = document.getElementById('filter-section').value;
+            var priority = document.getElementById('filter-priority').value;
+            var search = document.getElementById('filter-search').value.toLowerCase();
+            var filtered = allComplaints.filter(function(c) {
+                if (section && c.section_id !== section) return false;
+                if (priority && c.priority !== priority) return false;
+                if (search) {
+                    var haystack = (c.complaint_id + ' ' + c.asset_type + ' ' + c.asset_id + ' ' + (c.description || '') + ' ' + c.city + ' ' + c.section_id).toLowerCase();
+                    if (!haystack.includes(search)) return false;
+                }
+                return true;
             });
-        });
+            render(filtered);
+        }
+
+        // Verify complaint -> sends to AI classification
+        window.verifyComplaint = async function(complaintId) {
+            if (!confirm('Verify complaint ' + complaintId + '? This will forward it to AI analysis.')) return;
+            try {
+                var result = await apiRequest('/inspections/verify', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        complaint_id: complaintId,
+                        decision: 'verified',
+                        notes: 'Inspector verified - forwarding to AI classification'
+                    })
+                });
+                alert('Complaint ' + complaintId + ' verified and sent to AI analysis!');
+                load(); // Refresh list
+            } catch(e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        // Reject modal
+        window.openRejectModal = function(complaintId) {
+            document.getElementById('reject-complaint-id').value = complaintId;
+            document.getElementById('reject-reason').value = '';
+            document.getElementById('reject-notes').value = '';
+            document.getElementById('reject-modal').style.display = 'flex';
+        };
+
+        window.closeRejectModal = function() {
+            document.getElementById('reject-modal').style.display = 'none';
+        };
+
+        window.confirmReject = async function() {
+            var complaintId = document.getElementById('reject-complaint-id').value;
+            var reason = document.getElementById('reject-reason').value;
+            var notes = document.getElementById('reject-notes').value;
+            if (!reason) {
+                alert('Please select a reason for rejection');
+                return;
+            }
+            try {
+                var result = await apiRequest('/inspections/verify', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        complaint_id: complaintId,
+                        decision: 'rejected',
+                        notes: reason + (notes ? ' - ' + notes : '')
+                    })
+                });
+                alert('Complaint ' + complaintId + ' rejected.');
+                closeRejectModal();
+                load(); // Refresh list
+            } catch(e) {
+                alert('Error: ' + e.message);
+            }
+        };
+
+        load();
+        document.getElementById('filter-section').addEventListener('change', applyFilters);
+        document.getElementById('filter-priority').addEventListener('change', applyFilters);
+        document.getElementById('filter-search').addEventListener('input', applyFilters);
     })();
     </script>
 </body>
