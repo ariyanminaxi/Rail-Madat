@@ -20,9 +20,9 @@ def get_alerts(
     admin = get_supabase_admin()
     alerts = []
 
-    # Try dashboard_alerts table first
+    # Try dashboard_alerts table first - filter by current user
     try:
-        q = admin.table("dashboard_alerts").select("*")
+        q = admin.table("dashboard_alerts").select("*").eq("user_id", user.user_id)
         if unread_only:
             q = q.eq("is_read", False)
         result = q.order("created_at", desc=True).limit(50).execute()
