@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RailMadad — Bundle Approvals</title>
+    <title>RailMadat — Bundle Approvals</title>
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/theme.css">
 </head>
@@ -13,10 +13,12 @@
         <main class="main-content">
             <div id="topbar-container"></div>
             <div class="page-content">
-                <div style="padding:16px;border:1px solid var(--border-light);border-radius:10px;background:var(--accent-light);margin-bottom:20px">
-                    <strong style="color:var(--accent);font-size:12px">ℹ Bundle Approvals</strong>
-                    <p style="color:var(--text-tertiary);font-size:11px;margin-top:4px">Bundles combine multiple maintenance tasks into a single time block for efficiency.</p>
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">BUNDLE APPROVALS</p>
+                    <h1>Maintenance Bundles</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Tasks grouped into time blocks for approval</p>
                 </div>
+
                 <div class="panel" style="max-width:1000px">
                     <div class="panel-header"><div><h3>Maintenance Bundles</h3><p>Tasks grouped into time blocks for approval</p></div></div>
                     <table class="data-table">
@@ -24,11 +26,14 @@
                         <tbody id="bundles-tbody"><tr><td colspan="8" class="loading-spinner" style="border:none"></td></tr></tbody>
                     </table>
                 </div>
+
                 <div class="footer-disclaimer">RailMadat is a decision-support system. All scheduling decisions require manager approval.</div>
             </div>
         </main>
     </div>
-    <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
     (function() {
         if (!AUTH.requireAuth()) return;
@@ -36,36 +41,60 @@
         async function loadBundles() {
             var tbody = document.getElementById('bundles-tbody');
             try {
-                var blocks = await apiRequest('/scheduling/blocks');
-                if (blocks && blocks.length > 0) {
+                var blocks = await apiRequest('/scheduling/blocks') || [];
+                if (blocks.length > 0) {
                     tbody.innerHTML = blocks.map(function(b) {
-                        var sClass = b.status === 'Approved' ? 'badge-green' : b.status === 'Rejected' ? 'badge-red' : 'badge-orange';
+                        var status = b.approval_status || b.status || 'Pending';
+                        var sClass = status === 'Approved' ? 'badge-green' : status === 'Rejected' ? 'badge-red' : 'badge-orange';
+                        var canApprove = (status === 'Pending' || status === 'Awaiting Approval');
                         return '<tr>' +
-                            '<td><strong style="color:var(--text-primary)>' + (b.block_id || b.scheduling_block_id || '') + '</strong></td>' +
+                            '<td><strong style="color:var(--text-primary)">' + (b.block_id || '') + '</strong></td>' +
                             '<td>' + (b.section_id || '') + '</td>' +
                             '<td>' + (b.department || '') + '</td>' +
-                            '<td>' + (b.start_time || b.start_window || '') + '</td>' +
-                            '<td>' + (b.end_time || b.end_window || '') + '</td>' +
-                            '<td>' + (b.task_count || (b.task_ids ? b.task_ids.length : 0) || 0) + '</td>' +
-                            '<td><span class="badge ' + sClass + '">' + (b.status || 'Pending') + '</span></td>' +
-                            '<td>' + (b.status === 'Pending' || b.status === 'Awaiting Approval' ? '<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick=\"approveBlock(\'' + (b.block_id || b.scheduling_block_id) + '\')\">Approve</button>' : '—') + '</td>' +
+                            '<td>' + formatTime(b.start_time || b.start_window) + '</td>' +
+                            '<td>' + formatTime(b.end_time || b.end_window) + '</td>' +
+                            '<td>' + (b.task_count || (b.task_ids ? b.task_ids.length : 0) || '—') + '</td>' +
+                            '<td><span class="badge ' + sClass + '">' + status + '</span></td>' +
+                            '<td>' + (canApprove ? '<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick="approveBlock(\'' + b.block_id + '\')">Approve</button> <button class="btn-secondary" style="font-size:11px;padding:6px 10px" onclick="rejectBlock(\'' + b.block_id + '\')">Reject</button>' : '<span style="color:var(--text-tertiary)">—</span>') + '</td>' +
                             '</tr>';
                     }).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No maintenance bundles found</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px"><div class="empty-state"><h3>No maintenance bundles</h3><p>Bundles will appear when tasks are grouped for scheduling.</p></div></td></tr>';
                 }
             } catch(e) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px">No bundles pending approval</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--text-tertiary);padding:40px"><div class="empty-state"><h3>No bundles available</h3><p>Could not load bundles. Backend may be starting up.</p></div></td></tr>';
             }
         }
+
+        function formatTime(t) {
+            if (!t) return '—';
+            try { return t.replace('T', ' ').slice(0, 16); } catch(e) { return t; }
+        }
+
         window.approveBlock = async function(blockId) {
             try {
-                await apiRequest('/scheduling/blocks/' + blockId + '/approve', { method: 'POST' });
+                await apiRequest('/scheduling/approvals', {
+                    method: 'POST',
+                    body: { block_id: blockId, decision: 'Approved' }
+                });
                 loadBundles();
             } catch(e) {
                 alert('Failed to approve: ' + e.message);
             }
         };
+
+        window.rejectBlock = async function(blockId) {
+            try {
+                await apiRequest('/scheduling/approvals', {
+                    method: 'POST',
+                    body: { block_id: blockId, decision: 'Rejected', reason: 'Rejected by manager' }
+                });
+                loadBundles();
+            } catch(e) {
+                alert('Failed to reject: ' + e.message);
+            }
+        };
+
         loadBundles();
     })();
     </script>

@@ -54,7 +54,7 @@
     --bg-primary: #0a0f17;
     --bg-secondary: #101822;
     --bg-card: #111c28;
-    --bg-input: #1a2536;
+    --bg-input: #1e2d42;
     --bg-hover: #141e2b;
     --bg-active: #1a2d42;
     --text-primary: #e8edf5;
@@ -386,9 +386,9 @@ h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); }
 }
 .login-card {
     width: 100%; max-width: 420px;
-    background: var(--bg-card); border: 1px solid var(--border-color);
+    background: var(--bg-card); border: 1px solid var(--border-light);
     border-radius: 18px; padding: 38px 34px;
-    box-shadow: 0 24px 70px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.3), 0 0 0 1px rgba(56,155,245,0.05);
 }
 .login-header h1 { margin: 4px 0 10px; font-size: 22px; color: var(--text-primary); }
 .login-header p { margin: 0 0 26px; color: var(--text-secondary); font-size: 13px; line-height: 1.6; }

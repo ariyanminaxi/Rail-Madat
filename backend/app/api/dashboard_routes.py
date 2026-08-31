@@ -18,14 +18,85 @@ def get_alerts(
     user: CurrentUser = Depends(get_current_user),
 ):
     admin = get_supabase_admin()
+    alerts = []
+
+    # Try dashboard_alerts table first
     try:
         q = admin.table("dashboard_alerts").select("*")
         if unread_only:
             q = q.eq("is_read", False)
         result = q.order("created_at", desc=True).limit(50).execute()
-        return result.data or []
+        alerts = result.data or []
     except Exception:
-        return []
+        pass
+
+    # If empty, generate alerts from real data
+    if not alerts:
+        try:
+            # Overdue assets
+            assets = admin.table("asset_registry").select("*").eq("is_overdue", True).limit(10).execute()
+            for a in (assets.data or []):
+                alerts.append({
+                    "alert_id": "ALT-" + a.get("asset_id", ""),
+                    "alert_type": "overdue_maintenance",
+                    "title": "Overdue Asset Maintenance",
+                    "message": f"Asset {a.get('asset_id', '')} ({a.get('asset_type', '')}) is overdue for maintenance. Last maintained: {a.get('last_maintenance_date', 'N/A')}. Next due: {a.get('next_due_date', 'N/A')}.",
+                    "severity": "High" if a.get("asset_criticality") in ("Critical", "High") else "Medium",
+                    "created_at": a.get("next_due_date", ""),
+                })
+        except Exception:
+            pass
+
+        try:
+            # Faulty assets
+            faulty = admin.table("asset_registry").select("*").eq("current_status", "Faulty").limit(10).execute()
+            for a in (faulty.data or []):
+                alerts.append({
+                    "alert_id": "ALT-FAULTY-" + a.get("asset_id", ""),
+                    "alert_type": "faulty_asset",
+                    "title": "Faulty Asset Reported",
+                    "message": f"Asset {a.get('asset_id', '')} ({a.get('asset_type', '')}) at {a.get('city', '')} is currently faulty and needs attention.",
+                    "severity": "High",
+                    "created_at": a.get("next_due_date", ""),
+                })
+        except Exception:
+            pass
+
+        try:
+            # Overdue schedules
+            schedules = admin.table("maintenance_schedules").select("*").eq("is_overdue", True).limit(10).execute()
+            for s in (schedules.data or []):
+                alerts.append({
+                    "alert_id": "ALT-SCH-" + s.get("schedule_id", ""),
+                    "alert_type": "overdue_schedule",
+                    "title": "Overdue Maintenance Schedule",
+                    "message": f"Schedule {s.get('schedule_id', '')} for asset {s.get('asset_id', '')} is overdue. Activity: {s.get('activity', '')}.",
+                    "severity": "Medium",
+                    "created_at": s.get("next_due_date", ""),
+                })
+        except Exception:
+            pass
+
+        try:
+            # Critical/High priority tasks
+            tasks = admin.table("maintenance_tasks").select("*").in_("priority", ["Critical", "High"]).in_("status", ["Reported", "Under Review", "Waiting for Block"]).limit(10).execute()
+            for t in (tasks.data or []):
+                alerts.append({
+                    "alert_id": "ALT-TASK-" + t.get("task_id", ""),
+                    "alert_type": "pending_task",
+                    "title": "High Priority Task Pending",
+                    "message": f"Task {t.get('task_id', '')} for {t.get('asset_id', '')} ({t.get('fault_category', '')}) is {t.get('status', '')}.",
+                    "severity": t.get("priority", "Medium"),
+                    "created_at": t.get("due_date", ""),
+                })
+        except Exception:
+            pass
+
+    # Sort by severity then date
+    sev_order = {"Critical": 0, "High": 1, "Medium": 2, "Low": 3}
+    alerts.sort(key=lambda a: (sev_order.get(a.get("severity", "Medium"), 2), a.get("created_at", "")), reverse=True)
+
+    return alerts[:50]
 
 
 @router.post("/alerts/{alert_id}/read")

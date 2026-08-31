@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RailMadad — Pending Approvals</title>
+    <title>RailMadat — Pending Approvals</title>
     <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="assets/css/theme.css">
 </head>
@@ -13,62 +13,79 @@
         <main class="main-content">
             <div id="topbar-container"></div>
             <div class="page-content">
+                <div style="margin-bottom:24px">
+                    <p class="eyebrow">PENDING APPROVALS</p>
+                    <h1>Approval Queue</h1>
+                    <p style="color:var(--text-tertiary);margin-top:4px">Maintenance tasks awaiting approval before scheduling</p>
+                </div>
+
                 <div class="panel">
-                    <div class="panel-header"><div><h3>Approval Queue</h3><p>Maintenance blocks awaiting approval</p></div></div>
+                    <div class="panel-header"><div><h3>Tasks Awaiting Approval</h3><p>Review and approve maintenance tasks</p></div></div>
                     <table class="data-table">
-                        <thead><tr><th>Block ID</th><th>Section</th><th>Start</th><th>End</th><th>Tasks</th><th>Status</th><th>Actions</th></tr></thead>
-                        <tbody id="blocks-tbody"><tr><td colspan="7" class="loading-spinner" style="border:none"></td></tr></tbody>
+                        <thead><tr><th>Task ID</th><th>Asset</th><th>Section</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody id="tasks-tbody"><tr><td colspan="6" class="loading-spinner" style="border:none"></td></tr></tbody>
                     </table>
                 </div>
+
+                <div class="footer-disclaimer">RailMadat is a decision-support system. All approvals require authorized manager action.</div>
             </div>
         </main>
     </div>
-    <script src="assets/js/auth.js"></script><script src="assets/js/api.js"></script><script src="assets/js/app.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/app.js"></script>
     <script>
     (function() {
         if (!AUTH.requireAuth()) return;
 
         async function loadApprovals() {
-            var tbody = document.getElementById('blocks-tbody');
+            var tbody = document.getElementById('tasks-tbody');
             try {
-                var tasks = await apiRequest('/tasks');
-                var pending = (tasks || []).filter(function(t) {
-                    return t.status === 'Waiting for Block' || t.status === 'Scheduled' || t.status === 'Reported' || t.status === 'Under Review';
+                var tasks = await apiRequest('/tasks') || [];
+                var pending = tasks.filter(function(t) {
+                    return t.status === 'Waiting for Block' || t.status === 'Under Review' || t.status === 'Reported';
                 });
                 if (pending.length > 0) {
                     tbody.innerHTML = pending.map(function(t) {
-                        var sClass = 'badge-orange';
-                        if (t.status === 'Waiting for Block') sClass = 'badge-high';
-                        if (t.priority === 'Critical') sClass = 'badge-critical';
+                        var pClass = 'badge-medium';
+                        if (t.priority === 'Critical') pClass = 'badge-critical';
+                        else if (t.priority === 'High') pClass = 'badge-high';
+                        else if (t.priority === 'Low') pClass = 'badge-low';
                         return '<tr>' +
-                            '<td><strong style="color:var(--text-primary)>' + (t.task_id || '') + '</strong></td>' +
+                            '<td><strong style="color:var(--text-primary)">' + (t.task_id || '') + '</strong></td>' +
                             '<td>' + (t.asset_id || '') + '</td>' +
                             '<td>' + (t.section_id || t.department || '') + '</td>' +
-                            '<td>' + (t.scheduled_date || t.next_due_date || '—') + '</td>' +
-                            '<td>' + (t.assigned_team_id || 'Unassigned') + '</td>' +
-                            '<td><span class="badge ' + sClass + '">' + (t.status || '') + '</span></td>' +
-                            '<td>' + (t.status === 'Waiting for Block' ? '<button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick=\"approveTask(\'' + t.task_id + '\')\">Approve</button> <button class="btn-secondary" style="font-size:11px;padding:6px 10px" onclick=\"rejectTask(\'' + t.task_id + '\')\">Reject</button>' : '<span style="color:var(--text-tertiary)">—</span>') + '</td>' +
+                            '<td><span class="badge ' + pClass + '">' + (t.priority || 'Medium') + '</span></td>' +
+                            '<td><span class="badge badge-orange">' + (t.status || '') + '</span></td>' +
+                            '<td><button class="btn-primary" style="font-size:11px;padding:6px 14px" onclick="approveTask(\'' + t.task_id + '\')">Approve</button> <button class="btn-secondary" style="font-size:11px;padding:6px 10px" onclick="rejectTask(\'' + t.task_id + '\')">Reject</button></td>' +
                             '</tr>';
                     }).join('');
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals — all tasks are processed</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-tertiary);padding:40px"><div class="empty-state"><h3>No pending approvals</h3><p>All tasks have been processed.</p></div></td></tr>';
                 }
             } catch(e) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-tertiary);padding:40px">No pending approvals</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-tertiary);padding:40px"><div class="empty-state"><h3>Could not load tasks</h3><p>Backend may be starting up. Try again in a moment.</p></div></td></tr>';
             }
         }
+
         window.approveTask = async function(taskId) {
             try {
-                await apiRequest('/tasks/' + taskId + '/start', { method: 'POST' });
+                await apiRequest('/tasks/' + taskId + '/approve', { method: 'POST' });
                 loadApprovals();
-            } catch(e) { alert('Failed: ' + e.message); }
+            } catch(e) {
+                alert('Failed to approve: ' + e.message);
+            }
         };
+
         window.rejectTask = async function(taskId) {
             try {
-                await apiRequest('/tasks/' + taskId + '/complete', { method: 'POST', body: { status: 'Deferred', resolution_type: 'Rejected' } });
+                await apiRequest('/tasks/' + taskId + '/reject', { method: 'POST' });
                 loadApprovals();
-            } catch(e) { alert('Failed: ' + e.message); }
+            } catch(e) {
+                alert('Failed to reject: ' + e.message);
+            }
         };
+
         loadApprovals();
     })();
     </script>

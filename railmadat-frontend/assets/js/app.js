@@ -95,7 +95,7 @@
 
         var html = '<aside class="sidebar" id="sidebar">';
         html += '<div class="brand"><div class="brand-icon">R</div>';
-        html += '<div><h1>RailMadad</h1><span>Maintenance Coordination</span></div></div>';
+        html += '<div><h1>RailMadat</h1><span>Maintenance Coordination</span></div></div>';
         html += '<nav class="navigation" aria-label="Primary navigation">';
 
         navItems.forEach(function(item) {

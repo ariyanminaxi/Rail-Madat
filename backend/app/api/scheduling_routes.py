@@ -19,6 +19,16 @@ def _gen_id(prefix: str) -> str:
     return f"{prefix}-{uuid.uuid4().int % 900 + 100}"
 
 
+@router.get("/blocks")
+def list_blocks(user: CurrentUser = Depends(get_current_user)):
+    admin = get_supabase_admin()
+    try:
+        result = admin.table("maintenance_blocks").select("*").order("created_at", desc=True).limit(50).execute()
+        return result.data or []
+    except Exception:
+        return []
+
+
 @router.get("/blocks/{block_id}")
 def get_block(block_id: str, user: CurrentUser = Depends(get_current_user)):
     admin = get_supabase_admin()

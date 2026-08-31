@@ -76,6 +76,31 @@ def receive_ai_classification(
     return task_data
 
 
+@router.post("/tasks/{task_id}/approve")
+def approve_task(task_id: str, user: CurrentUser = Depends(get_current_user)):
+    admin = get_supabase_admin()
+    result = admin.table("maintenance_tasks").select("*").eq("task_id", task_id).limit(1).execute()
+    if not result.data:
+        raise HTTPException(404, "Task not found")
+    task = result.data[0]
+    if task.get("status") not in ("Waiting for Block", "Under Review", "Reported"):
+        raise HTTPException(400, f"Task is {task.get('status')}, cannot approve")
+    admin.table("maintenance_tasks").update({"status": "Scheduled"}).eq("task_id", task_id).execute()
+    _log_audit(user.user_id, user.role, "APPROVE", "task", task_id, "success")
+    return {"task_id": task_id, "status": "Scheduled"}
+
+
+@router.post("/tasks/{task_id}/reject")
+def reject_task(task_id: str, reason: str = "", user: CurrentUser = Depends(get_current_user)):
+    admin = get_supabase_admin()
+    result = admin.table("maintenance_tasks").select("*").eq("task_id", task_id).limit(1).execute()
+    if not result.data:
+        raise HTTPException(404, "Task not found")
+    admin.table("maintenance_tasks").update({"status": "Deferred"}).eq("task_id", task_id).execute()
+    _log_audit(user.user_id, user.role, "REJECT", "task", task_id, "success")
+    return {"task_id": task_id, "status": "Deferred"}
+
+
 @router.get("/tasks/{task_id}")
 def get_task(task_id: str, user: CurrentUser = Depends(get_current_user)):
     admin = get_supabase_admin()
