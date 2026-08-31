@@ -134,16 +134,16 @@ def verify_complaint(
 
         new_status = "Rejected"
 
-    # Audit log
-    admin.table("audit_events").insert({
-        "audit_id": f"AUD-{uuid.uuid4().int % 900 + 100}",
-        "user_id": user.user_id,
-        "role": user.role,
-        "action": "INSPECTION_VERIFIED" if decision == "verified" else "INSPECTION_REJECTED",
-        "resource_type": "complaint",
-        "resource_id": complaint_id,
-        "status": "SUCCESS",
-    }).execute()
+    # Audit log (non-blocking)
+    try:
+        admin.table("audit_events").insert({
+            "action": "INSPECTION_VERIFIED" if decision == "verified" else "INSPECTION_REJECTED",
+            "resource_type": "complaint",
+            "resource_id": complaint_id,
+            "status": "SUCCESS",
+        }).execute()
+    except Exception:
+        pass
 
     return {
         "complaint_id": complaint_id,
